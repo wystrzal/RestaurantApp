@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Order
 {
@@ -34,8 +36,7 @@ namespace Order
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
-                options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
 
             services.AddMvc(options =>
@@ -43,6 +44,16 @@ namespace Order
                 options.EnableEndpointRouting = false;
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddSwaggerGen(opt =>
+            {
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Order",
+                    Version = "v1",
+                    Description = "Order Service"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +64,26 @@ namespace Order
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger()
+              .UseSwaggerUI(c =>
+              {
+                  c.SwaggerEndpoint($"/swagger/v1/swagger.json", "OrderApi");
+              });
+
+            app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
             app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

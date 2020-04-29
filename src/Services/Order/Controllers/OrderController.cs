@@ -8,12 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Order.Controllers
 {
-    [Authorize(Policy = "ApiReader")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        [Authorize(Policy = "Consumer")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {

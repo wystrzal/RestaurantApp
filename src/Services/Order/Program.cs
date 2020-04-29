@@ -20,8 +20,7 @@ namespace Order
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://localhost:5100");
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

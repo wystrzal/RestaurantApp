@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Identity.Extensions;
-using Identity.Infrastructure.Services;
 using Identity.Models;
+using Identity.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -54,7 +54,6 @@ namespace Identity
 
             services.AddControllersWithViews();
 
-
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
@@ -98,7 +97,7 @@ namespace Identity
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
