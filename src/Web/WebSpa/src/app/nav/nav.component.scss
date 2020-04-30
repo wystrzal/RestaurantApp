@@ -1,0 +1,43 @@
+@import "../../variables";
+
+.nav {
+  background-color: $dark-sienna;
+  border-bottom: 3px solid $bronze;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.smth {
+  width: 100%;
+}
+
+i {
+  color: red;
+  font-size: 30px;
+}
+
+a {
+  position: relative;
+  color: $crayola;
+  font-size: 20px;
+  margin: 0 8px;
+  transition: all 200ms linear;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    width: 0px;
+    height: 2px;
+    background-color: darken($color: $crayola, $amount: 20);
+    transition: all 200ms linear;
+  }
+
+  &:hover {
+    color: darken($color: $crayola, $amount: 20);
+    &::before {
+      width: 100%;
+    }
+  }
+}

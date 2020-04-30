@@ -1,4 +1,4 @@
-﻿using Menu.Data.Repository.BaseRepository;
+﻿using Menu.Data.Repository;
 using Menu.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Menu.Data.Repository.MenuRepo
 {
-    public interface IMenuRepository : IBaseRepository<MenuItem>
+    public interface IMenuRepository : IBaseRepository
     {
     }
 }

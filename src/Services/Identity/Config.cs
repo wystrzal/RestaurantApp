@@ -22,8 +22,7 @@ namespace Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource("resourceapi", "Resource API"),
-                new ApiResource("menu", "Menu Service"),
+                new ApiResource("menu", "Menu Service")
             };
         }
 
@@ -36,7 +35,7 @@ namespace Identity
                     ClientId = "angular_spa",
                     ClientName = "Angular SPA",
                     AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "resourceapi" },
+                    AllowedScopes = { "openid", "profile", "email", "menu" },
                     RedirectUris = {"http://localhost:4200/auth-callback"},
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
                     AllowedCorsOrigins = {"http://localhost:4200"},

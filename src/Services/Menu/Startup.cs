@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Menu.Data;
 using Menu.Data.Repository;
+using Menu.Data.Repository.MenuRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +50,7 @@ namespace Menu
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Moderator", policy => policy.RequireClaim(ClaimTypes.Role, "moderator"));
+                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "menu"));
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin", 
                     "moderator"));
             });
@@ -70,7 +71,7 @@ namespace Menu
                 });
             });
 
-            services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddTransient<IMenuRepository, MenuRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +95,7 @@ namespace Menu
             app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

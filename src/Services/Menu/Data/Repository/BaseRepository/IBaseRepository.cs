@@ -4,15 +4,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Menu.Data.Repository.BaseRepository
+namespace Menu.Data.Repository
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseRepository
     {
-        void Add(T entity);
-        void Delete(T entity); 
+        void Add<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
+        void Update<T>(T entity) where T : class;
         Task<bool> SaveAll();
-        Task<List<T>> GetByCondition(Func<T, bool> func);
-        Task<List<T>> GetAll();
-        Task<T> GetById(int id);
+        Task<List<T>> GetByCondition<T>(Func<T, bool> func) where T : class;
+        Task<List<T>> GetAll<T>() where T : class;
+        Task<T> GetById<T>(int id) where T : class;
     }
 }
