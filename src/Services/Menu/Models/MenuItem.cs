@@ -14,14 +14,12 @@ namespace Menu.Models
         [Required]
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        [Required]
+        public string[] Ingriedients { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
-
-        [Required]
-        public string PictureUrl { get; set; }
 
         public bool Available { get; set; }
 

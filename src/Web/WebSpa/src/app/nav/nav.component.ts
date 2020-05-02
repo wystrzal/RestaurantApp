@@ -12,11 +12,11 @@ export class NavComponent implements OnInit {
     if (window.pageYOffset > 0) {
       setTimeout(() => {
         this.navStyle = 10;
-      }, 300);
+      }, 200);
     } else {
       setTimeout(() => {
         this.navStyle = 25;
-      }, 300);
+      }, 200);
     }
   }
 

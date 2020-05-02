@@ -1,9 +1,54 @@
-.home-bg {
-  background: url("../../assets/images/restaurant-bg.jpg") no-repeat;
+@import "../../variables";
+@import "../../mixins";
+
+.home {
+  background: -webkit-gradient(
+      linear,
+      left bottom, left top,
+      from(rgba($dark-sienna, 0.4)),
+      to(rgba($dark-sienna, 0.4))
+    ),
+    url("../../assets/images/restaurant-bg.jpg") no-repeat;
+  background: linear-gradient(
+      0deg,
+      rgba($dark-sienna, 0.4),
+      rgba($dark-sienna, 0.4)
+    ),
+    url("../../assets/images/restaurant-bg.jpg") no-repeat;
   background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
+  @include bgPosition;
+
+  &-box {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  &-content {
+    h2 {
+      color: $crayola;
+      font-size: 45px;
+      text-shadow: 2px 1px $bronze;
+    }
+    span {
+      color: $bronze;
+      text-shadow: 2px 1px $crayola;
+    }
+
+    &__icons {
+      font-size: 55px;
+      color: $bronze;
+      padding-top: 50px;
+      text-shadow: 2px 2px $crayola;
+
+      &--crayola {
+        color: $crayola;
+        text-shadow: 2px 2px $bronze;
+      }
+    }
+  }
 }

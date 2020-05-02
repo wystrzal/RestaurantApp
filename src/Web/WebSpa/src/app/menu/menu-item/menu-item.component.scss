@@ -1,0 +1,27 @@
+@import "../../../_variables.scss";
+
+.pagination {
+  &__custom::ng-deep {
+    & .page-item.active .page-link {
+      color: $bronze;
+      text-decoration: underline;
+      background-color: transparent;
+    }
+
+    & .page-link {
+      background-color: transparent;
+      color: $crayola;
+      border: 1px solid $crayola;
+      box-shadow: none;
+    }
+  }
+}
+
+.fa {
+  font-size: 30px;
+}
+
+.ingriedent {
+  font-size: 18px;
+  font-weight: 400;
+}

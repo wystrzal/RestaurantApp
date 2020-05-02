@@ -1,1 +1,9 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+}

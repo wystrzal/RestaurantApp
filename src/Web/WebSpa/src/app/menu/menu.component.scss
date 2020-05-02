@@ -1,0 +1,93 @@
+@import "../../mixins";
+@import "../../variables";
+
+.menu {
+  &-first {
+    border-top: 3px solid $bronze;
+    background: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        from(rgba($dark-sienna, 0.4)),
+        to(rgba($dark-sienna, 0.4))
+      ),
+      url("../../assets/images/meat-bg.jpg") no-repeat;
+    background: linear-gradient(
+        0deg,
+        rgba($dark-sienna, 0.4),
+        rgba($dark-sienna, 0.4)
+      ),
+      url("../../assets/images/meat-bg.jpg") no-repeat;
+    @include bgMinPosition;
+
+    &-box {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+
+      &__title {
+        @include titleColor;
+      }
+    }
+  }
+  &-second {
+    border-top: 3px solid $bronze;
+    background: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        from(rgba($dark-sienna, 0.4)),
+        to(rgba($dark-sienna, 0.4))
+      ),
+      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+    background: linear-gradient(
+        0deg,
+        rgba($dark-sienna, 0.4),
+        rgba($dark-sienna, 0.4)
+      ),
+      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+    background-size: cover;
+
+    &-box {
+      @include bgPosition;
+      height: 100%;
+
+      &-items {
+        color: $crayola;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      &-type {
+        &__select {
+          background: -webkit-gradient(
+              linear,
+              left bottom,
+              left top,
+              from(rgba($dark-sienna, 0.4)),
+              to(rgba($dark-sienna, 0.4))
+            ),
+            url("../../assets/images/restaurant-bg.jpg") no-repeat;
+          background: linear-gradient(
+              0deg,
+              rgba($dark-sienna, 0.4),
+              rgba($dark-sienna, 0.4)
+            ),
+            url("../../assets/images/restaurant-bg.jpg") no-repeat;
+          background-size: cover;
+          border: 1px solid $bronze;
+          color: $crayola;
+
+          & option {
+            background-color: $bronze;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+}

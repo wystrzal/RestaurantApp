@@ -1,0 +1,12 @@
+@import "../../mixins";
+@import "../../variables";
+
+.contact {
+  @include bgMinPosition;
+  background-color: $dark-sienna;
+  border-top: 3px solid $bronze;
+
+  &-box {
+    color: $crayola;
+  }
+}
