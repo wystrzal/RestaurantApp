@@ -10,9 +10,18 @@
         <div class="menu-second-box-type">
           <div class="row text-center">
             <div class="offset-2 col-8 offset-md-4 col-md-4">
-              <select class="form-control menu-second-box-type__select">
-                <option value="1">Pizza</option>
-                <option value="1">Pizza</option>
+              <select
+                [(ngModel)]="type"
+                (change)="selectMenu()"
+                class="form-control menu-second-box-type__select"
+              >
+                <option
+                  *ngFor="let type of menuTypes"
+                  name="type"
+                  value="{{ type.id }}"
+                >
+                  {{ type.type }}
+                </option>
               </select>
             </div>
           </div>

@@ -1,4 +1,4 @@
-@import "../../../_variables.scss";
+@import "../../../../_variables.scss";
 
 .pagination {
   &__custom::ng-deep {
@@ -18,10 +18,10 @@
 }
 
 .fa {
-  font-size: 30px;
+  font-size: 35px;
 }
 
-.ingriedent {
-  font-size: 18px;
+.description {
+  font-size: 16px;
   font-weight: 400;
 }

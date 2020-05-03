@@ -26,11 +26,44 @@ namespace Menu.Data
             {
                 List<MenuItem> menuItems = new List<MenuItem>()
                 {
-                    new MenuItem {Description = "Tasty Burger", MenuTypeId = 1, Name = "Burger", Price = 12M,
-                     PictureUrl = "https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+                    new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
                      },
-                    new MenuItem {Description = "Water with ice and lemon.", MenuTypeId = 2, Name = "Water", Price = 2M,
-                     PictureUrl = "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
+                     new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                      new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                       new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                        new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                         new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                          new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                           new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                            new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                             new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                              new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                               new MenuItem {Description = "Very tasty burger with beaf, double cheese and tomato",
+                        MenuTypeId = 1, Name = "Burger", Price = 12M
+                     },
+                    new MenuItem {Description = "Refreshing water, best on hot days",
+                        MenuTypeId = 2, Name = "Water", Price = 2.50M
                      }
                 };
 

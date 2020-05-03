@@ -25,9 +25,9 @@ namespace Menu.Controllers
 
         [AllowAnonymous]
         [HttpGet("type/{typeId}")]
-        public async Task<IActionResult> GetMenu(int typeId)
+        public async Task<IActionResult> GetMenu(int typeId, [FromQuery]int pageIndex = 0 )
         {
-            var menu = await menuRepository.GetByCondition<MenuItem>(x => x.MenuTypeId == typeId);           
+            var menu = await menuRepository.GetMenu(typeId, pageIndex);
             
             return Ok(menu);
         }

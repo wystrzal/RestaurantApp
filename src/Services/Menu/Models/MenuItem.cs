@@ -14,8 +14,7 @@ namespace Menu.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string[] Ingriedients { get; set; }
+        public string Description { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]

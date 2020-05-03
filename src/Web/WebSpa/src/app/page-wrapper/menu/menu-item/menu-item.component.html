@@ -1,0 +1,30 @@
+<div *ngFor="let item of menuItems?.data">
+  <div class="row pt-5" *ngIf="item.available == true">
+    <div class="col-1">{{ item.price }}$</div>
+    <div class="offset-1 col-8">
+      {{ item.name }}
+    </div>
+    <div class="col-1">
+      <i class="fa fa-shopping-basket"></i>
+    </div>
+    <div class="col-10">
+      <p class="description">
+        {{ item.description }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div
+  class="pagination d-flex justify-content-center pt-5"
+  *ngIf="menuItems?.data && menuItems?.count > 5"
+>
+  <pagination
+    [maxSize]="6"
+    [directionLinks]="false"
+    [itemsPerPage]="5"
+    [totalItems]="menuItems?.count"
+    (pageChanged)="changePage($event)"
+    class="pagination__custom"
+  ></pagination>
+</div>

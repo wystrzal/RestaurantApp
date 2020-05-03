@@ -3,25 +3,21 @@ import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { NavComponent } from "./nav/nav.component";
-import { HomeComponent } from "./home/home.component";
-import { AboutComponent } from "./about/about.component";
-import { MenuComponent } from "./menu/menu.component";
-import { ContactComponent } from "./contact/contact.component";
-import { PaginationModule } from "ngx-bootstrap/pagination";
-import { MenuItemComponent } from "./menu/menu-item/menu-item.component";
 import { HttpClientModule } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
+import { BasketComponent } from "./basket/basket.component";
+import { AppRoutes } from "./app.routing";
+import { PageWrapperModule } from "./page-wrapper/page-wrapper.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavComponent,
-    HomeComponent,
-    AboutComponent,
-    MenuComponent,
-    ContactComponent,
-    MenuItemComponent,
+  declarations: [AppComponent, NavComponent, BasketComponent],
+  imports: [
+    PageWrapperModule,
+    BrowserModule,
+
+    RouterModule.forRoot(AppRoutes),
+    HttpClientModule,
   ],
-  imports: [BrowserModule, PaginationModule.forRoot(), HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

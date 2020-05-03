@@ -1,5 +1,5 @@
-@import "../../mixins";
-@import "../../variables";
+@import "../../../mixins";
+@import "../../../variables";
 
 .menu {
   &-first {
@@ -11,13 +11,13 @@
         from(rgba($dark-sienna, 0.4)),
         to(rgba($dark-sienna, 0.4))
       ),
-      url("../../assets/images/meat-bg.jpg") no-repeat;
+      url("../../../assets/images/meat-bg.jpg") no-repeat;
     background: linear-gradient(
         0deg,
         rgba($dark-sienna, 0.4),
         rgba($dark-sienna, 0.4)
       ),
-      url("../../assets/images/meat-bg.jpg") no-repeat;
+      url("../../../assets/images/meat-bg.jpg") no-repeat;
     @include bgMinPosition;
 
     &-box {
@@ -40,13 +40,13 @@
         from(rgba($dark-sienna, 0.4)),
         to(rgba($dark-sienna, 0.4))
       ),
-      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+      url("../../../assets/images/restaurant-bg.jpg") no-repeat;
     background: linear-gradient(
         0deg,
         rgba($dark-sienna, 0.4),
         rgba($dark-sienna, 0.4)
       ),
-      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+      url("../../../assets/images/restaurant-bg.jpg") no-repeat;
     background-size: cover;
 
     &-box {
@@ -68,13 +68,13 @@
               from(rgba($dark-sienna, 0.4)),
               to(rgba($dark-sienna, 0.4))
             ),
-            url("../../assets/images/restaurant-bg.jpg") no-repeat;
+            url("../../../assets/images/restaurant-bg.jpg") no-repeat;
           background: linear-gradient(
               0deg,
               rgba($dark-sienna, 0.4),
               rgba($dark-sienna, 0.4)
             ),
-            url("../../assets/images/restaurant-bg.jpg") no-repeat;
+            url("../../../assets/images/restaurant-bg.jpg") no-repeat;
           background-size: cover;
           border: 1px solid $bronze;
           color: $crayola;

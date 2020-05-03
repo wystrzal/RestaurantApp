@@ -1,5 +1,5 @@
-@import "../../mixins";
-@import "../../variables";
+@import "../../../mixins";
+@import "../../../variables";
 
 .about {
   &-first {
@@ -11,13 +11,13 @@
         from(rgba($dark-sienna, 0.4)),
         to(rgba($dark-sienna, 0.4))
       ),
-      url("../../assets/images/pizza-bg.jpg") no-repeat;
+      url("../../../assets/images/pizza-bg.jpg") no-repeat;
     background: linear-gradient(
         0deg,
         rgba($dark-sienna, 0.4),
         rgba($dark-sienna, 0.4)
       ),
-      url("../../assets/images/pizza-bg.jpg") no-repeat;
+      url("../../../assets/images/pizza-bg.jpg") no-repeat;
     @include bgMinPosition;
 
     &-box {
@@ -41,13 +41,13 @@
         from(rgba($dark-sienna, 0.4)),
         to(rgba($dark-sienna, 0.4))
       ),
-      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+      url("../../../assets/images/restaurant-bg.jpg") no-repeat;
     background: linear-gradient(
         0deg,
         rgba($dark-sienna, 0.4),
         rgba($dark-sienna, 0.4)
       ),
-      url("../../assets/images/restaurant-bg.jpg") no-repeat;
+      url("../../../assets/images/restaurant-bg.jpg") no-repeat;
     @include bgPosition;
 
     &-box-1 {
