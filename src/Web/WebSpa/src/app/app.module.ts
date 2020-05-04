@@ -14,7 +14,6 @@ import { PageWrapperModule } from "./page-wrapper/page-wrapper.module";
   imports: [
     PageWrapperModule,
     BrowserModule,
-
     RouterModule.forRoot(AppRoutes),
     HttpClientModule,
   ],

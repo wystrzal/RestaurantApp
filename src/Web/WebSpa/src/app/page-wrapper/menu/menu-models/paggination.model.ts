@@ -4,5 +4,5 @@ export interface Paggination {
   pageIndex: number;
   pageSize: number;
   count: number;
-  data: MenuItemModel;
+  data: MenuItemModel[];
 }

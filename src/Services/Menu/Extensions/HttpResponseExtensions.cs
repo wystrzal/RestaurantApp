@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Identity.Extensions
+namespace Menu.Extensions
 {
     public static class HttpResponseExtensions
     {

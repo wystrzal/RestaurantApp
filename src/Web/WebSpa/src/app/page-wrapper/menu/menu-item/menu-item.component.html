@@ -1,11 +1,13 @@
-<div *ngFor="let item of menuItems?.data">
+<div *ngFor="let item of menuItems?.data; let i = index">
   <div class="row pt-5" *ngIf="item.available == true">
     <div class="col-1">{{ item.price }}$</div>
     <div class="offset-1 col-8">
       {{ item.name }}
     </div>
     <div class="col-1">
-      <i class="fa fa-shopping-basket"></i>
+      <a type="button" (click)="addToBasket(i)"
+        ><i class="fa fa-shopping-basket"></i>
+      </a>
     </div>
     <div class="col-10">
       <p class="description">
