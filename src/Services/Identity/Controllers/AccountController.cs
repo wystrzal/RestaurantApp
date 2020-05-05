@@ -115,17 +115,14 @@ namespace Identity.Controllers
                 return BadRequest(ModelState);
             }
             
-            var user = new User { UserName = model.Email, Name = model.Name, Email = model.Email };
+            var user = new User { UserName = model.Name };
 
             var result = await userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
             
             await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
-            //await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Admin));
-
+            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Worker));
 
             return Ok();
         }

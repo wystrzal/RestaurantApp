@@ -4,7 +4,7 @@ namespace Identity.Infrastructure.Constants
 {
     public static class Roles
     {
-        public const string Consumer = "consumer";
         public const string Admin = "admin";
+        public const string Worker = "worker";
     }
 }

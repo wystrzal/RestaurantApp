@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Messaging;
+using GreenPipes;
+using Kitchen.Messaging.Consumers;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,38 @@ namespace Kitchen
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddScoped<OrderStartedEventConsumer>();
+
+            services.AddMassTransit(options =>
+            {
+                options.AddConsumer<OrderStartedEventConsumer>();
+
+                options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host("rabbitmq://localhost", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+                    cfg.ReceiveEndpoint("kitchen_order_started", ep =>
+                    {
+                        ep.Bind<OrderStartedEvent>();
+                        ep.ConfigureConsumer<OrderStartedEventConsumer>(provider);
+                    });
+                }));
+            });
+
+            services.AddMassTransitHostedService();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +76,9 @@ namespace Kitchen
 
             app.UseRouting();
 
+            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

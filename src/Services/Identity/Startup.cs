@@ -35,7 +35,10 @@ namespace Identity
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration["ConnectionStrings"]));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
 

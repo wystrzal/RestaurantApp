@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using GreenPipes;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -19,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Order.Data;
 using Order.Extensions;
+using RabbitMQ.Client;
 
 namespace Order
 {
@@ -34,6 +37,8 @@ namespace Order
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
@@ -72,6 +77,23 @@ namespace Order
                     Description = "Menus Service"
                 });
             });
+
+            services.AddMassTransit(options =>
+            {
+                options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host("rabbitmq://localhost", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+            
+                cfg.ExchangeType = ExchangeType.Fanout;
+                  
+                }));
+            });
+
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ namespace Identity
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Email(),
                 new IdentityResources.Profile(),
             };
         }
@@ -32,15 +32,26 @@ namespace Identity
             {
                 new Client {
                     RequireConsent = false,
-                    ClientId = "angular_spa",
-                    ClientName = "Angular SPA",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "menu" },
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/"},
-                    AllowedCorsOrigins = {"http://localhost:4200"},
-                    AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600
+                    ClientId = "mvc",
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    ClientName = "MVC Client",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris = {"http://localhost:5050/signin-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:5050/signout-callback-oidc"},
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "menu"
+                    }               
+                },
+                new Client
+                {
+                    ClientId = "client",
+                    ClientSecrets = {new Secret("secret".Sha256())},
+
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = {"menu"}
                 }
             };
         }

@@ -17,8 +17,10 @@ namespace Order.Data
         {
             builder.Entity<Orders>(order =>
             {
-                order.HasMany(p => p.OrderItems)
-                    .WithOne(p => p.Order)
+                order.HasKey(o => o.OrderId);
+
+                order.HasMany(o => o.OrderItems)
+                    .WithOne(o => o.Order)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }

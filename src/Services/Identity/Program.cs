@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Identity.Data;
 using Identity.Models;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
@@ -26,9 +27,10 @@ namespace Identity
                 {
                     var context = services.GetRequiredService<DataContext>();
                     var persistedContext = services.GetRequiredService<PersistedGrantDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
                     context.Database.Migrate();
                     persistedContext.Database.Migrate();
-  
+                    DataSeed.AddData(userManager);
                 }
                 catch (Exception ex)
                 {
