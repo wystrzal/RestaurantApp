@@ -1,0 +1,27 @@
+@import "../../../variables";
+
+.form-control {
+  background-color: $dark-sienna;
+  color: $crayola;
+  border: 1px solid $bronze;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($bronze, 0.25);
+  }
+}
+
+.btn {
+  &-submit {
+    background-color: $dark-sienna;
+    color: $crayola;
+    border: 1px solid $bronze;
+    font-size: 18px;
+    transition: all 200ms ease-in;
+    box-shadow: none;
+
+    &:hover {
+      transform: scale(1.1);
+      color: $bronze;
+    }
+  }
+}

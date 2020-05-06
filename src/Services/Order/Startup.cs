@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using GreenPipes;
 using MassTransit;
+using Menu.Data.Repository.MenuRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Order.Data;
+using Order.Data.Repository.MenuRepo;
 using Order.Extensions;
 using RabbitMQ.Client;
 
@@ -37,7 +39,9 @@ namespace Order
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
             services.AddDbContext<DataContext>(options =>
             {
@@ -57,9 +61,8 @@ namespace Order
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "menu"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin",
-                    "moderator"));
+                options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
 
             services.AddMvc(options =>
@@ -94,6 +97,8 @@ namespace Order
             });
 
             services.AddMassTransitHostedService();
+
+            services.AddTransient<IOrderRepo, OrderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

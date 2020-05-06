@@ -1,7 +1,5 @@
 import { Routes } from "@angular/router";
 
-import { BasketComponent } from "./basket/basket.component";
-
 export const AppRoutes: Routes = [
   {
     path: "",
@@ -9,6 +7,6 @@ export const AppRoutes: Routes = [
   },
   {
     path: "basket",
-    component: BasketComponent,
+    loadChildren: "./basket/basket.module.ts#BasketModule",
   },
 ];

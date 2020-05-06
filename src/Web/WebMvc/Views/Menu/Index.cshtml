@@ -1,0 +1,29 @@
+﻿@model WebMvc.ViewModels.MenuViewModel
+
+
+
+<h1>Menu Panel</h1>
+<div class="container">
+    <div class="row text-center">
+        <div class="offset-4 col-4">
+            <form asp-action="Index" asp-controller="Menu" method="post">
+                <div class="form-group">
+                    <select asp-for="@Model.TypeId" asp-items="@Model.MenuType" class="form-control"></select>
+                    <input class="form-control" type="submit" />
+                </div>
+            </form>
+        </div>
+    </div> 
+
+    @foreach (var item in Model.MenuItem)
+    {
+        <div class="row text-center">
+            <div class="col-6">
+                @item.Name
+            </div>
+            <div class="col-6">
+                @item.Price$
+            </div>
+        </div>
+    }
+</div>

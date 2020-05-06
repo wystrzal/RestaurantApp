@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using WebMvc.Infractructure;
+using WebMvc.Services.MenuService;
 
 namespace WebMvc
 {
@@ -65,9 +67,11 @@ namespace WebMvc
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin",
-                    "moderator"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
+
+            services.AddSingleton<IHttpClient, CustomHttpClient>();
+            services.AddTransient<IMenuService, MenuService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

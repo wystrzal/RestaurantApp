@@ -57,8 +57,7 @@ namespace Menu
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "menu"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin", 
-                    "moderator"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
 
             services.AddMvc(options =>

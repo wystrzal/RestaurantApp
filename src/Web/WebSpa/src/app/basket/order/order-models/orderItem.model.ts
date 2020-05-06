@@ -1,5 +1,4 @@
-export interface BasketItemModel {
-  productId: number;
+export interface OrderItemModel {
   productName: string;
   productPrice: number;
   quantity: number;

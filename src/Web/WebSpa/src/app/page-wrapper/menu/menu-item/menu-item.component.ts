@@ -43,9 +43,9 @@ export class MenuItemComponent implements OnInit {
 
   addToBasket(index: number) {
     const basketItemToAdd: BasketItemModel = {
-      itemId: this.menuItems.data[index].id,
-      itemName: this.menuItems.data[index].name,
-      itemPrice: this.menuItems.data[index].price,
+      productId: this.menuItems.data[index].id,
+      productName: this.menuItems.data[index].name,
+      productPrice: this.menuItems.data[index].price,
       quantity: 1,
     };
 
@@ -56,7 +56,7 @@ export class MenuItemComponent implements OnInit {
       let basketItem: any;
 
       basketItem = this.basketItems.find(
-        (b) => b.itemId == basketItemToAdd.itemId
+        (b) => b.productId == basketItemToAdd.productId
       );
 
       if (basketItem == null) {
@@ -64,7 +64,7 @@ export class MenuItemComponent implements OnInit {
         localStorage.setItem("basket", JSON.stringify(this.basketItems));
       } else {
         const basketIndex = this.basketItems.findIndex(
-          (b) => b.itemId == basketItemToAdd.itemId
+          (b) => b.productId == basketItemToAdd.productId
         );
 
         this.basketItems[basketIndex].quantity += 1;

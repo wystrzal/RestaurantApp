@@ -28,7 +28,7 @@ namespace Menu.Controllers
         public async Task<IActionResult> GetMenu(int typeId, [FromQuery]int pageIndex = 0 )
         {
             var menu = await menuRepository.GetMenu(typeId, pageIndex);
-            
+
             return Ok(menu);
         }
 

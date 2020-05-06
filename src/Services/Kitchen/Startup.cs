@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Common.Messaging;
 using GreenPipes;
@@ -37,7 +38,11 @@ namespace Kitchen
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddScoped<OrderStartedEventConsumer>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });
 
             services.AddMassTransit(options =>
             {
@@ -60,6 +65,8 @@ namespace Kitchen
             });
 
             services.AddMassTransitHostedService();
+
+            services.AddScoped<OrderStartedEventConsumer>();
 
 
         }

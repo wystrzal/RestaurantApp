@@ -16,15 +16,17 @@
     color: $crayola;
     font-size: 20px;
     font-weight: 700;
-  }
-}
 
-.fa {
-  font-size: 35px;
-  transition: all 200ms linear;
+    &__items {
+      .fa {
+        font-size: 35px;
+        transition: all 200ms linear;
 
-  &:hover {
-    color: darken($color: $crayola, $amount: 40);
+        &:hover {
+          color: $bronze;
+        }
+      }
+    }
   }
 }
 
@@ -36,8 +38,28 @@
   }
 
   &:hover {
-    color: darken($color: $crayola, $amount: 40);
+    color: $bronze;
     transform: scale(1.3);
+  }
+}
+
+.btn {
+  .fa {
+    font-size: 16px;
+  }
+
+  &-buy {
+    background-color: $dark-sienna;
+    color: $crayola;
+    border: 1px solid $bronze;
+    font-size: 18px;
+    box-shadow: none;
+    transition: all 200ms ease-in;
+
+    &:hover {
+      transform: scale(1.1);
+      color: $bronze;
+    }
   }
 }
 

@@ -9,6 +9,7 @@ import { MenuItemComponent } from "./menu/menu-item/menu-item.component";
 import { StartRoutes } from "./start.routing";
 import { FormsModule } from "@angular/forms";
 import { PaginationModule } from "ngx-bootstrap/pagination";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,6 @@ import { PaginationModule } from "ngx-bootstrap/pagination";
     ContactComponent,
     MenuItemComponent,
   ],
-  imports: [CommonModule, StartRoutes, FormsModule, PaginationModule.forRoot()],
+  imports: [SharedModule, StartRoutes, FormsModule, PaginationModule.forRoot()],
 })
 export class PageWrapperModule {}

@@ -29,7 +29,6 @@ namespace WebMvc.Controllers
             return View();
         }
 
-        [Authorize(Policy = "Worker")]
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");

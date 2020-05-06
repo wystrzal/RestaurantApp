@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BasketItemModel } from "../shared/models/basketItem.model";
 import { BasketService } from "../shared/basket.service";
+import { OrderService } from "./order/order.service";
 
 @Component({
   selector: "app-basket",
@@ -8,14 +9,21 @@ import { BasketService } from "../shared/basket.service";
   styleUrls: ["./basket.component.scss"],
 })
 export class BasketComponent implements OnInit {
+  orderPanel = false;
   basketItems: BasketItemModel[];
   totalPrice: number = 0;
 
-  constructor(private basketService: BasketService) {}
+  constructor(
+    private basketService: BasketService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit() {
     this.basketItems = JSON.parse(localStorage.getItem("basket"));
     this.countTotalPrice();
+    this.orderService.submitOrder.subscribe((panelStatus) => {
+      this.orderPanel = panelStatus;
+    });
   }
 
   deleteItem(itemIndex: number) {
@@ -44,11 +52,15 @@ export class BasketComponent implements OnInit {
     this.basketItems.forEach((b) => {
       if (b.quantity > 1) {
         for (let i = 0; i < b.quantity; i++) {
-          this.totalPrice += b.itemPrice;
+          this.totalPrice += b.productPrice;
         }
       } else {
-        this.totalPrice += b.itemPrice;
+        this.totalPrice += b.productPrice;
       }
     });
+  }
+
+  clickBuy() {
+    this.orderPanel = true;
   }
 }
