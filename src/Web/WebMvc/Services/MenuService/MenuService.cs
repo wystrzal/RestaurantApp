@@ -24,13 +24,13 @@ namespace WebMvc.Services.MenuService
             baseUrl = "http://localhost:5200/api/menu/";
         }
 
-        public async Task<PaginatedItemsViewModel<MenuItem>> GetMenuItems(int? typeId, int? page)
+        public async Task<PaginatedItems<MenuItem>> GetMenuItems(int? typeId, int? page)
         {
             var menuItems = ApiPaths.Menu.GetMenu(baseUrl, typeId ?? 1, page ?? 0);
 
             var dataString = await httpClient.GetStringAsync(menuItems);
 
-            var response = JsonConvert.DeserializeObject<PaginatedItemsViewModel<MenuItem>>(dataString);
+            var response = JsonConvert.DeserializeObject<PaginatedItems<MenuItem>>(dataString);
 
             return response;
         }

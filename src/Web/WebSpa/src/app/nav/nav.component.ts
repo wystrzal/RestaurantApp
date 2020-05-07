@@ -30,9 +30,9 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.amountInBasket = JSON.parse(localStorage.getItem("basket")).length;
 
-    this.basketService.getBasketItems.subscribe((items) => {
-      this.basketItems = items;
-      this.amountInBasket = items.length;
+    this.basketService.getBasketItems.subscribe((basketItems) => {
+      this.basketItems = basketItems;
+      this.amountInBasket = basketItems.length;
     });
   }
 }

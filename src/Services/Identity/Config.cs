@@ -1,8 +1,10 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Identity
@@ -15,6 +17,8 @@ namespace Identity
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+      
+
             };
         }
 
@@ -22,7 +26,9 @@ namespace Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource("menu", "Menu Service")
+                new ApiResource("menu", "Menu Service"),
+                new ApiResource("order", "Order Service")
+               
             };
         }
 
@@ -37,12 +43,13 @@ namespace Identity
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.Code,
                     RedirectUris = {"http://localhost:5050/signin-oidc"},
-                    PostLogoutRedirectUris = {"http://localhost:5050/signout-callback-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:5050/signout-callback-oidc"},         
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "menu"
+                        "menu",
+                        "order"
                     }               
                 },
                 new Client
@@ -51,7 +58,7 @@ namespace Identity
                     ClientSecrets = {new Secret("secret".Sha256())},
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = {"menu"}
+                    AllowedScopes = {"menu", "order"},  
                 }
             };
         }

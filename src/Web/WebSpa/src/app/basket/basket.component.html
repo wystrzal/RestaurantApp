@@ -61,7 +61,10 @@
 
       <div class="row text-center" *ngIf="orderPanel">
         <div class="col-12">
-          <app-order [orderItems]="basketItems"></app-order>
+          <app-order
+            [orderItems]="basketItems"
+            [totalPrice]="totalPrice"
+          ></app-order>
         </div>
       </div>
     </div>

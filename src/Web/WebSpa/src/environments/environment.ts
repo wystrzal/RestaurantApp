@@ -4,6 +4,7 @@
 
 export const environment = {
   apiMenu: "http://localhost:5200/api/menu/",
+  apiOrder: "http://localhost:5300/api/order/",
   production: false,
 };
 

@@ -122,7 +122,8 @@ namespace Identity.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
             
             await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Worker));
+            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Kitchen));
+            //kitchen / restaurant
 
             return Ok();
         }

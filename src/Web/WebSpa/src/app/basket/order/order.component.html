@@ -1,16 +1,36 @@
 <div class="row text-center">
   <div class="offset-md-3 col-md-6 col-12">
-    <form class="pb-5" (ngSubmit)="submitOrder()">
+    <form class="pb-5" #orderForm="ngForm" (ngSubmit)="submitOrder()">
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" id="address" class="form-control" />
+        <input
+          required
+          [(ngModel)]="order.address"
+          name="address"
+          type="text"
+          id="address"
+          class="form-control"
+        />
       </div>
       <div class="form-group">
         <label for="phone">Phone number</label>
-        <input type="text" id="phone" class="form-control" />
+        <input
+          required
+          [(ngModel)]="order.phoneNumber"
+          name="phoneNumber"
+          type="text"
+          id="phone"
+          class="form-control"
+        />
       </div>
       <div class="form-group">
-        <button class="btn btn-submit" type="submit">Submit</button>
+        <button
+          [disabled]="!orderForm.valid"
+          class="btn btn-submit"
+          type="submit"
+        >
+          Submit
+        </button>
       </div>
     </form>
   </div>

@@ -14,7 +14,6 @@ using Order.Models;
 
 namespace Order.Controllers
 {
-    [Authorize(Policy = "Worker")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -30,13 +29,23 @@ namespace Order.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetOrders()
+        [HttpGet("paid")]
+        public async Task<IActionResult> GetPaidOrders()
         {
-            var orders = await orderRepo.GetAll<Orders>();
+            var orders = await orderRepo.GetOrders(true);
 
             return Ok(orders);
         }
+            
+        [Authorize(Policy = "Admin")]
+        [HttpGet("notpaid")]
+        public async Task<IActionResult> GetNotPaidOrders()
+        {
+            var orders = await orderRepo.GetOrders(false);
+
+            return Ok(orders);
+        }
+
 
         [HttpGet("{orderId}")]
         public async Task<IActionResult> GetOrder(int orderId)
@@ -57,8 +66,10 @@ namespace Order.Controllers
         {
             var orderForAdd = mapper.Map<Orders>(order);
 
+            orderForAdd.OrderStatus = "created";
+
             orderRepo.Add(orderForAdd);
-        
+
             if (await orderRepo.SaveAll())
             {
                 return CreatedAtAction("GetOrder", new { orderId = orderForAdd.OrderId }, order);
@@ -71,6 +82,8 @@ namespace Order.Controllers
         {
             var orderForAdd = mapper.Map<Orders>(order);
 
+            orderForAdd.OrderStatus = "created";
+
             orderRepo.Add(orderForAdd);
 
             if (await orderRepo.SaveAll())
@@ -78,22 +91,6 @@ namespace Order.Controllers
                 return CreatedAtAction("GetOrder", new { orderId = orderForAdd.OrderId }, order);
             }
             return BadRequest("Could not add order");
-        }
-
-
-
-
-
-
-        [HttpPost("test")]
-        public IActionResult Test()
-        {
-            var orderItem = new List<OrderItemEvent>() { new OrderItemEvent() { Quantity = 1, ProductName = "Burger" } };
-            var order = new OrderStartedEvent(1, null, null, "1", Common.Messaging.OrderStatus.Created, 13M, orderItem);
-
-
-            bus.Publish(order).Wait();
-            return Ok();
         }
     }
 };

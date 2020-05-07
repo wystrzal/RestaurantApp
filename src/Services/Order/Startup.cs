@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using GreenPipes;
+using AutoMapper;
+using Common.Messaging;
+using IdentityServer4.Configuration;
 using MassTransit;
 using Menu.Data.Repository.MenuRepo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,6 +25,8 @@ using Microsoft.OpenApi.Models;
 using Order.Data;
 using Order.Data.Repository.MenuRepo;
 using Order.Extensions;
+using Order.Messaging;
+using Order.Messaging.Consumers;
 using RabbitMQ.Client;
 
 namespace Order
@@ -40,8 +44,7 @@ namespace Order
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddDbContext<DataContext>(options =>
             {
@@ -55,13 +58,13 @@ namespace Order
             }).AddJwtBearer(o =>
             {
                 o.Authority = "http://localhost:5000";
-                o.Audience = "menu";
+                o.Audience = "order";
                 o.RequireHttpsMetadata = false;
             });
+       
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
 
@@ -75,14 +78,16 @@ namespace Order
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Menu",
+                    Title = "Order",
                     Version = "v1",
-                    Description = "Menus Service"
+                    Description = "Order Service"
                 });
             });
 
             services.AddMassTransit(options =>
             {
+                options.AddConsumer<OrderReadyEventConsumer>();
+
                 options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     cfg.Host("rabbitmq://localhost", h =>
@@ -90,14 +95,19 @@ namespace Order
                         h.Username("guest");
                         h.Password("guest");
                     });
-            
-                cfg.ExchangeType = ExchangeType.Fanout;
-                  
+
+                    cfg.ReceiveEndpoint("order_ready", ep =>
+                    {
+                        ep.Bind<OrderReadyEvent>();
+                        ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
+                    });
                 }));
             });
 
             services.AddMassTransitHostedService();
 
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddScoped<OrderReadyEventConsumer>();
             services.AddTransient<IOrderRepo, OrderRepository>();
         }
 

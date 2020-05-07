@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,8 @@ namespace WebMvc.Infractructure
 
             // SetAuthorizationHeader(requestMessage);
             if (authorizationToken != null)
-            {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
+            {            
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
             }
             var response = await client.SendAsync(requestMessage);
 

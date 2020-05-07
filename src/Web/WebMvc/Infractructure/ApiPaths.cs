@@ -18,5 +18,12 @@ namespace WebMvc.Infractructure
                 return $"{baseUri}types";
             }
         }
+        public static class Order
+        {
+            public static string GetOrders(string baseUri)
+            {
+                return $"{baseUri}notpaid";
+            }
+        }
     }
 }

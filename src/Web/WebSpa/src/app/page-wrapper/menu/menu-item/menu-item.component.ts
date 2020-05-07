@@ -3,6 +3,7 @@ import { MenuService } from "../menu.service";
 import { Paggination } from "../menu-models/paggination.model";
 import { BasketItemModel } from "src/app/shared/models/basketItem.model";
 import { BasketService } from "src/app/shared/basket.service";
+import { ErrorService } from "src/app/shared/error.service";
 
 @Component({
   selector: "app-menu-item",
@@ -16,7 +17,8 @@ export class MenuItemComponent implements OnInit {
 
   constructor(
     private menuService: MenuService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit() {
@@ -34,7 +36,10 @@ export class MenuItemComponent implements OnInit {
   getMenuItems(typeId: number, pageIndex: number) {
     this.menuService.getMenuItems(typeId, pageIndex).subscribe((items) => {
       this.menuItems = items;
-    });
+    }),
+      (error) => {
+        this.errorService.newError(error);
+      };
   }
 
   changePage($event: any) {

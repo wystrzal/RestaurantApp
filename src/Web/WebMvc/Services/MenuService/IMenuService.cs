@@ -10,7 +10,7 @@ namespace WebMvc.Services.MenuService
 {
     public interface IMenuService
     {
-        Task<PaginatedItemsViewModel<MenuItem>> GetMenuItems(int? typeId, int? page);
+        Task<PaginatedItems<MenuItem>> GetMenuItems(int? typeId, int? page);
         Task<IEnumerable<SelectListItem>> GetMenuTypes();
     }
 }

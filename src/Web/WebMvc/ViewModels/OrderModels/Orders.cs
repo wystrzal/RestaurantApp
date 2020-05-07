@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Order.Models
+namespace WebMvc.Models
 {
     public class Orders
     {

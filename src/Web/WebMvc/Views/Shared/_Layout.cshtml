@@ -21,12 +21,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
-                    </ul>
-                </div>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.Claims.Any(x => x.Value == "admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Menu" asp-action="Index">Menu</a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Menu" asp-action="Index">Menu</a>
+                            <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Order</a>
                         </li>
                     </ul>
                 </div>

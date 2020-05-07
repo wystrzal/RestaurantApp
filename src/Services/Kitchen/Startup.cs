@@ -5,8 +5,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Common.Messaging;
 using GreenPipes;
-using Kitchen.Messaging.Consumers;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 
 namespace Kitchen
 {
@@ -32,22 +34,40 @@ namespace Kitchen
         {
             services.AddControllers();
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "http://localhost:5000";
+                o.Audience = "restaurant";
+                o.RequireHttpsMetadata = false;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+            });
+
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddAuthorization(options =>
+            services.AddSwaggerGen(opt =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Restaurant",
+                    Version = "v1",
+                    Description = "Restaurant Service"
+                });
             });
 
             services.AddMassTransit(options =>
             {
-                options.AddConsumer<OrderStartedEventConsumer>();
-
                 options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     cfg.Host("rabbitmq://localhost", h =>
@@ -56,19 +76,12 @@ namespace Kitchen
                         h.Password("guest");
                     });
 
-                    cfg.ReceiveEndpoint("kitchen_order_started", ep =>
-                    {
-                        ep.Bind<OrderStartedEvent>();
-                        ep.ConfigureConsumer<OrderStartedEventConsumer>(provider);
-                    });
+                    cfg.ExchangeType = ExchangeType.Fanout;
+
                 }));
             });
 
             services.AddMassTransitHostedService();
-
-            services.AddScoped<OrderStartedEventConsumer>();
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

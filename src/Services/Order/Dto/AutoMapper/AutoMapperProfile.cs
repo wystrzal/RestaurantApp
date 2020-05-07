@@ -11,6 +11,8 @@ namespace Order.Dto.AutoMapper
     {
         public AutoMapperProfile()
         {
+            CreateMap<OrderItemForAddDto, OrderItem>();
+
             CreateMap<OrderForAddWorkerDto, Orders>();
 
             CreateMap<OrderForAddClientDto, Orders>();

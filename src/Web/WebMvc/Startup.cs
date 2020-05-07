@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using WebMvc.Infractructure;
 using WebMvc.Services.MenuService;
+using WebMvc.Services.OrderService;
 
 namespace WebMvc
 {
@@ -55,9 +57,7 @@ namespace WebMvc
                     options.Scope.Clear();
                     options.Scope.Add("openid");
 
-                 
-
-                    options.Scope.Add("menu");
+                    options.Scope.Add("order");
                     options.ClaimActions.Add(new MapAllClaimsAction());
                     options.ClaimActions.DeleteClaim(JwtClaimTypes.Role);
                     options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
@@ -71,7 +71,9 @@ namespace WebMvc
             });
 
             services.AddSingleton<IHttpClient, CustomHttpClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

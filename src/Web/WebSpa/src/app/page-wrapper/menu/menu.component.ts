@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuService } from "./menu.service";
 import { MenuTypeModel } from "./menu-models/menuType.model";
+import { ErrorService } from "src/app/shared/error.service";
 
 @Component({
   selector: "app-menu",
@@ -11,7 +12,10 @@ export class MenuComponent implements OnInit {
   type: number;
   menuTypes: MenuTypeModel;
 
-  constructor(private menuService: MenuService) {}
+  constructor(
+    private menuService: MenuService,
+    private errorService: ErrorService
+  ) {}
 
   ngOnInit() {
     this.getMenuTypes();
@@ -19,9 +23,14 @@ export class MenuComponent implements OnInit {
   }
 
   getMenuTypes() {
-    this.menuService.getMenuTypes().subscribe((types) => {
-      this.menuTypes = types;
-    });
+    this.menuService.getMenuTypes().subscribe(
+      (types) => {
+        this.menuTypes = types;
+      },
+      (error) => {
+        this.errorService.newError(error);
+      }
+    );
   }
 
   selectMenu() {

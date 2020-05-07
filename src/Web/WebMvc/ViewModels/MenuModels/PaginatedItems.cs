@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebMvc.ViewModels
 {
-    public class PaginatedItemsViewModel<TEntity> where TEntity : class
+    public class PaginatedItems<TEntity> where TEntity : class
     {
         public int PageIndex { get; private set; }
 
@@ -15,7 +15,7 @@ namespace WebMvc.ViewModels
 
         public IEnumerable<TEntity> Data { get; private set; }
 
-        public PaginatedItemsViewModel(int pageIndex, int count, IEnumerable<TEntity> data)
+        public PaginatedItems(int pageIndex, int count, IEnumerable<TEntity> data)
         {
             this.PageIndex = pageIndex;
             this.PageSize = 5;

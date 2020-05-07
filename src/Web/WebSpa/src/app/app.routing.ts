@@ -7,6 +7,6 @@ export const AppRoutes: Routes = [
   },
   {
     path: "basket",
-    loadChildren: "./basket/basket.module.ts#BasketModule",
+    loadChildren: "./basket/basket.module#BasketModule",
   },
 ];
