@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Kitchen.Messaging
+namespace Restaurant.Messaging
 {
     public class OrderReadyEvent
     {

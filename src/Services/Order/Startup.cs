@@ -5,7 +5,6 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using Common.Messaging;
 using IdentityServer4.Configuration;
 using MassTransit;
 using Menu.Data.Repository.MenuRepo;
@@ -103,7 +102,6 @@ namespace Order
                     });
                 }));
             });
-
             services.AddMassTransitHostedService();
 
             services.AddAutoMapper(typeof(Startup).Assembly);

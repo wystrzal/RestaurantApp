@@ -55,6 +55,7 @@ namespace Menu.Controllers
             return Ok(menuItem);
         }
 
+        //TODO
         [HttpPost("new/item")]
         public async Task<IActionResult> AddNewItem(MenuItem menuItem)
         {
@@ -70,6 +71,7 @@ namespace Menu.Controllers
             return BadRequest("Model is not valid.");
         }
 
+        //TODO
         [HttpPost("new/type")]
         public async Task<IActionResult> AddNewType(MenuType menuType)
         {
@@ -85,6 +87,7 @@ namespace Menu.Controllers
             return BadRequest("Model is not valid.");
         }
 
+        //TODO
         [HttpDelete("delete/{itemId}")]
         public async Task<IActionResult> DeleteItem(int itemId)
         {
@@ -105,6 +108,7 @@ namespace Menu.Controllers
             return BadRequest("Could not delete menu item.");
         }
 
+        //TODO
         [HttpDelete("delete/type/{typeId}")]
         public async Task<IActionResult> DeleteType(int typeId)
         {
@@ -125,6 +129,7 @@ namespace Menu.Controllers
             return BadRequest("Could not delete menu type");
         }
 
+        //TODO
         [HttpPut]
         public async Task<IActionResult> UpdateItem(MenuItem itemToUpdate)
         {

@@ -22,12 +22,12 @@ namespace Menu.Data.Repository.MenuRepo
         {
             if (orderStatusIsPaid)
             {
-                return await dataContext.Orders.Where(x => x.OrderStatus == "paid")
+                return await dataContext.Orders.Where(x => x.OrderStatus == "delivered")
                     .Include(x => x.OrderItems).ToListAsync();
             } 
             else
             {
-                return await dataContext.Orders.Where(x => x.OrderStatus != "paid")
+                return await dataContext.Orders.Where(x => x.OrderStatus != "delivered")
                     .Include(x => x.OrderItems).ToListAsync();
             }
         

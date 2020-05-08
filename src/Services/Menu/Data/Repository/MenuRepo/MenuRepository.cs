@@ -21,8 +21,9 @@ namespace Menu.Data.Repository.MenuRepo
         {
             var totalItems = await dataContext.MenuItems.Where(m => m.MenuTypeId == typeId).CountAsync();
 
-            var menu = await dataContext.MenuItems.Where(m => m.MenuTypeId == typeId).
-                OrderBy(m => m.Name).Skip(5 * pageIndex).Take(5).ToListAsync();
+            var menu = await dataContext.MenuItems
+                .Where(m => m.MenuTypeId == typeId)
+                .OrderBy(m => m.Name).Skip(5 * pageIndex).Take(5).ToListAsync();
 
             var menuToReturn = new PaginatedItemsViewModel<MenuItem>(pageIndex, totalItems, menu);
 

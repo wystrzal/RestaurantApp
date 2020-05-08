@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Common.Messaging;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,19 +17,17 @@ namespace Order.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IBus bus;
         private readonly IOrderRepo orderRepo;
         private readonly IMapper mapper;
 
-        public OrderController(IBus bus, IOrderRepo orderRepo, IMapper mapper)
+        public OrderController(IOrderRepo orderRepo, IMapper mapper)
         {
-            this.bus = bus;
             this.orderRepo = orderRepo;
             this.mapper = mapper;
         }
 
-        [HttpGet("paid")]
-        public async Task<IActionResult> GetPaidOrders()
+        [HttpGet("delivered")]
+        public async Task<IActionResult> GetDeliveredOrders()
         {
             var orders = await orderRepo.GetOrders(true);
 
@@ -38,8 +35,8 @@ namespace Order.Controllers
         }
             
         [Authorize(Policy = "Admin")]
-        [HttpGet("notpaid")]
-        public async Task<IActionResult> GetNotPaidOrders()
+        [HttpGet]
+        public async Task<IActionResult> GetNotDeliveredOrders()
         {
             var orders = await orderRepo.GetOrders(false);
 

@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51642",
-      "sslPort": 44336
+      "applicationUrl": "http://localhost:63570",
+      "sslPort": 44322
     }
   },
   "profiles": {
@@ -20,8 +20,8 @@
     "Kitchen": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
-      "applicationUrl": "http://localhost:5400",
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5100",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

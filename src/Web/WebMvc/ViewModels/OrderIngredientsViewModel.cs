@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMvc.ViewModels.OrderModels;
 
-namespace Kitchen.Messaging
+namespace WebMvc.ViewModels
 {
-    public class OrderReadyEvent
+    public class OrderIngredientsViewModel
     {
         public int OrderId { get; set; }
-        public int MyProperty { get; set; }
         public IEnumerable<OrderIngredients> OrderIngredients { get; set; }
-    }
-    public class OrderIngredients
-    {
-        public string Name { get; set; }
-        public int Quantity { get; set; }
     }
 }

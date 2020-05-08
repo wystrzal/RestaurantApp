@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common.Messaging;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Restaurant.Messaging;
 
 namespace Restaurant.Controllers
 {
@@ -21,6 +20,12 @@ namespace Restaurant.Controllers
             this.bus = bus;
         }
 
+        [HttpPost("{orderId}")]
+        public async Task<IActionResult> OrderReady(int orderId, List<OrderIngredients> orderIngredients)
+        {
+            await bus.Publish(new OrderReadyEvent() { OrderId = orderId, OrderIngredients = orderIngredients });
+            return Ok();
+        }
 
     }
 }

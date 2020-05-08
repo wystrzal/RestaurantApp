@@ -1,0 +1,59 @@
+﻿@model IEnumerable<WebMvc.Models.Orders>
+
+    @foreach (var order in Model)
+    {
+        @if (order.OrderStatus == "created")
+        {
+            <div class="col-md-4 col-12">
+                <div class="card mb-2">
+                    <h5 class="card-header">New Order</h5>
+                    <div class="card-body">
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <p class="card-text">Name: @item.ProductName</p>
+                            <p class="card-text mb-3 border-bottom">Quantity: @item.Quantity</p>
+
+                        }
+                        @{
+                            var orderIngredients = new List<WebMvc.ViewModels.OrderModels.OrderIngredients>();
+                            var orderIngredientsVM = new WebMvc.ViewModels.OrderIngredientsViewModel();
+
+                            foreach (var item in order.OrderItems)
+                            {
+                                orderIngredients.Add(new WebMvc.ViewModels.OrderModels.OrderIngredients
+                                { Name = item.ProductName, Quantity = item.Quantity });
+                            }
+                            orderIngredientsVM.OrderId = order.OrderId;
+                            orderIngredientsVM.OrderIngredients = orderIngredients;
+                        }
+
+                        <button class="btn btn-success" id="ready-@order.OrderId">Ready</button>
+
+                        <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+                        <script>
+                                    $(document).ready(function () {
+                                        $("#ready-@order.OrderId").click(function () {
+                                            var orderIngredientsViewModel
+                                                = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(orderIngredientsVM));
+
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/Restaurant/OrderReady",
+                                                data: JSON.stringify(orderIngredientsViewModel),
+                                                contentType: "application/json; charset=utf-8",
+                                                dataType: "json",
+                                                success: function () {
+                                                    alert("Ok");
+                                                },
+                                                failure: function () {
+                                                    alert("NOK");
+                                                }
+                                            })
+                                        });
+                                    });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        }
+    }

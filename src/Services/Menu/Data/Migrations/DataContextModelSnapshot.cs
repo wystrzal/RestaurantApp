@@ -18,6 +18,40 @@ namespace Menu.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Menu.Models.MenuIngredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MenuIngredients");
+                });
+
+            modelBuilder.Entity("Menu.Models.MenuIngredientsItems", b =>
+                {
+                    b.Property<int>("MenuIngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("MenuIngredientId", "MenuItemId");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.ToTable("MenuIngredientsItems");
+                });
+
             modelBuilder.Entity("Menu.Models.MenuItem", b =>
                 {
                     b.Property<int>("Id")
@@ -62,6 +96,21 @@ namespace Menu.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MenuTypes");
+                });
+
+            modelBuilder.Entity("Menu.Models.MenuIngredientsItems", b =>
+                {
+                    b.HasOne("Menu.Models.MenuIngredient", "MenuIngredient")
+                        .WithMany("MenuIngredientsItems")
+                        .HasForeignKey("MenuIngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Menu.Models.MenuItem", "MenuItem")
+                        .WithMany("MenuIngredientsItems")
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Menu.Models.MenuItem", b =>

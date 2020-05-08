@@ -22,7 +22,7 @@ namespace WebMvc.Infractructure
         {
             public static string GetOrders(string baseUri)
             {
-                return $"{baseUri}notpaid";
+                return $"{baseUri}";
             }
         }
     }

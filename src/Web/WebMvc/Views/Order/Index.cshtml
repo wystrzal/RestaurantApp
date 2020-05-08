@@ -3,34 +3,15 @@
 <h2>Orders Panel</h2>
 <div class="container">
     <div class="row">
-
         @if (User.Claims.Any(c => c.Value == "admin" || c.Value == "kitchen"))
         {
-            @foreach (var order in Model)
-            {
-                @if (order.OrderStatus == "created")
-                {
-                    <div class="col-md-4 col-12">
-                        <div class="card mb-2">
-                            <h5 class="card-header">New Order</h5>
-                            <div class="card-body">
-                                @foreach (var item in order.OrderItems)
-                                {
-                                    <p class="card-text">Name: @item.ProductName</p>
-                                    <p class="card-text mb-3">Quantity: @item.Quantity</p>
-                                }
-                                <a href="#" class="btn btn-success">Ready</a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
+            <partial name="_KitchenOrders" model="Model" />
         }
         else if (User.Claims.Any(c => c.Value == "admin" || c.Value == "restaurant"))
         {
             @foreach (var order in Model)
             {
-                @if (order.OrderStatus == "ready" || order.OrderStatus == "delivered")
+                @if (order.OrderStatus == "ready")
                 {
                     <div class="col-md-4 col-12">
                         <div class="card mb-2">
@@ -58,16 +39,11 @@
                                 {
                                     <a href="#" class="btn btn-primary">Delivered</a>
                                 }
-                                else
-                                {
-                                    <a href="#" class="btn btn-primary">Paided</a>
-                                }
-
                             </div>
                         </div>
                     </div>
-                 }
-             }
+                }
+            }
         }
     </div>
 </div>
