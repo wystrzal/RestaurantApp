@@ -25,5 +25,13 @@ namespace WebMvc.Infractructure
                 return $"{baseUri}";
             }
         }
+
+        public static class Restaurant
+        {
+            public static string OrderReady(string baseUri, int orderId)
+            {
+                return $"{baseUri}{orderId}";
+            }
+        }
     }
 }

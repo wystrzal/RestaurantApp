@@ -2,6 +2,7 @@
 using Order.Data;
 using Order.Data.Repository;
 using Order.Data.Repository.MenuRepo;
+using Order.Helpers;
 using Order.Models;
 using System;
 using System.Collections.Generic;
@@ -18,16 +19,16 @@ namespace Menu.Data.Repository.MenuRepo
             this.dataContext = dataContext;
         }
 
-        public async Task<IEnumerable<Orders>> GetOrders(bool orderStatusIsPaid)
+        public async Task<IEnumerable<Orders>> GetOrders(bool orderStatusIsDelivered)
         {
-            if (orderStatusIsPaid)
+            if (orderStatusIsDelivered)
             {
-                return await dataContext.Orders.Where(x => x.OrderStatus == "delivered")
+                return await dataContext.Orders.Where(x => x.OrderStatus == CustomEnums.OrderStatus.Delivered)
                     .Include(x => x.OrderItems).ToListAsync();
             } 
             else
             {
-                return await dataContext.Orders.Where(x => x.OrderStatus != "delivered")
+                return await dataContext.Orders.Where(x => x.OrderStatus != CustomEnums.OrderStatus.Delivered)
                     .Include(x => x.OrderItems).ToListAsync();
             }
         

@@ -43,13 +43,13 @@ namespace WebMvc.Infractructure
                 throw new ArgumentException("Value must be either post or put.", nameof(method));
             }
 
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
+            var requestMessage = new HttpRequestMessage(method, uri);
 
             requestMessage.Content = new StringContent(JsonConvert.SerializeObject(item), System.Text.Encoding.UTF8, "application/json");
 
             if (authorizationToken != null)
             {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
             }
 
             var response = await client.SendAsync(requestMessage);
@@ -78,7 +78,7 @@ namespace WebMvc.Infractructure
            
             if (authorizationToken != null)
             {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
             }
 
             return await client.SendAsync(requestMessage);

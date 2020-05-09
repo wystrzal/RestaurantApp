@@ -10,7 +10,7 @@ using Order.Data;
 namespace Order.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200504222330_InitDb")]
+    [Migration("20200509161949_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

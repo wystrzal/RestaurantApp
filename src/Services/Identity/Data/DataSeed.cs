@@ -1,4 +1,4 @@
-﻿using Identity.Infrastructure.Constants;
+﻿using Identity.Helpers;
 using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System;

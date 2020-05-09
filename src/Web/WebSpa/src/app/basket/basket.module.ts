@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { BasketComponent } from "./basket.component";
 import { OrderComponent } from "./order/order.component";
 import { BasketRoutes } from "./basket.routing";

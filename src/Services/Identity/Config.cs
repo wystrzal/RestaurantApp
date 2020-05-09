@@ -17,8 +17,6 @@ namespace Identity
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-      
-
             };
         }
 
@@ -27,8 +25,10 @@ namespace Identity
             return new List<ApiResource>
             {
                 new ApiResource("menu", "Menu Service"),
-                new ApiResource("order", "Order Service")
-               
+                new ApiResource("order", "Order Service"),
+                new ApiResource("kitchen", "Kitchen Service"),
+                new ApiResource("restaurant", "Restaurant Service")
+
             };
         }
 
@@ -49,7 +49,9 @@ namespace Identity
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "menu",
-                        "order"
+                        "order",
+                        "kitchen",
+                        "restaurant"
                     }               
                 },
                 new Client
@@ -58,7 +60,7 @@ namespace Identity
                     ClientSecrets = {new Secret("secret".Sha256())},
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = {"menu", "order"},  
+                    AllowedScopes = {"menu", "order", "kitchen", "restaurant"},  
                 }
             };
         }

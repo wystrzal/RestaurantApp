@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Restaurant.Messaging
+namespace Common.Messaging
 {
     public class OrderReadyEvent
     {
         public int OrderId { get; set; }
-        public int MyProperty { get; set; }
         public IEnumerable<OrderIngredients> OrderIngredients { get; set; }
     }
     public class OrderIngredients

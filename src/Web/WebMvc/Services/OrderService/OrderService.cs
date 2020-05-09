@@ -25,11 +25,11 @@ namespace WebMvc.Services.OrderService
 
         public async Task<IEnumerable<Orders>> GetOrders()
         {
-            var orders = ApiPaths.Order.GetOrders(baseUrl);
+            var getOrdersUri = ApiPaths.Order.GetOrders(baseUrl);
 
             var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
 
-            var dataString = await httpClient.GetStringAsync(orders, accessToken);
+            var dataString = await httpClient.GetStringAsync(getOrdersUri, accessToken);
 
             var response = JsonConvert.DeserializeObject<IEnumerable<Orders>>(dataString);
 

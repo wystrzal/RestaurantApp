@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "./order.service";
 import { OrderItemModel } from "./order-models/orderItem.model";
 import { OrderModel } from "./order-models/order.model";
@@ -30,26 +30,28 @@ export class OrderComponent implements OnInit {
   ngOnInit() {}
 
   submitOrder() {
-    this.order.orderItems.push(...this.orderItems);
-    this.order.totalPrice = this.totalPrice;
-    this.orderService.submitOrder.next(false);
+    this.errorService.confirm("Are you sure you want buy?", () => {
+      this.order.orderItems.push(...this.orderItems);
+      this.order.totalPrice = this.totalPrice;
+      this.orderService.submitOrder.next(false);
 
-    this.orderService.newOrder(this.order).subscribe(
-      () => {
-        this.orderItems = [];
+      this.orderService.newOrder(this.order).subscribe(
+        () => {
+          this.orderItems = [];
 
-        localStorage.setItem(
-          "basket",
-          JSON.stringify(this.orderItems as BasketItemModel[])
-        );
+          localStorage.setItem(
+            "basket",
+            JSON.stringify(this.orderItems as BasketItemModel[])
+          );
 
-        this.basketService.getBasketItems.next(
-          this.orderItems as BasketItemModel[]
-        );
-      },
-      (error) => {
-        this.errorService.newError(error);
-      }
-    );
+          this.basketService.getBasketItems.next(
+            this.orderItems as BasketItemModel[]
+          );
+        },
+        (error) => {
+          this.errorService.newError(error);
+        }
+      );
+    });
   }
 }

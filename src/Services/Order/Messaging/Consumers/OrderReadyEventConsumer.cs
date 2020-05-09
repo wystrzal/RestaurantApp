@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Order.Data.Repository.MenuRepo;
 using Order.Models;
+using Order.Helpers;
+using Common.Messaging;
 
 namespace Order.Messaging.Consumers
 {
@@ -20,7 +22,7 @@ namespace Order.Messaging.Consumers
         public async Task Consume(ConsumeContext<OrderReadyEvent> context)
         {
             var order = await orderRepo.GetById<Orders>(context.Message.OrderId);
-            order.OrderId = context.Message.OrderId;
+            order.OrderStatus = CustomEnums.OrderStatus.Ready;
             orderRepo.Update<Orders>(order);
             await orderRepo.SaveAll(); 
         }

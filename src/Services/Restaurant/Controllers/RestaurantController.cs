@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Messaging;
+using Common.Messaging;
 
 namespace Restaurant.Controllers
 {

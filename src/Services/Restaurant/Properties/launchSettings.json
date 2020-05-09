@@ -20,7 +20,7 @@
     "Kitchen": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
+      "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5400",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebMvc.Infractructure;
 using WebMvc.Services.MenuService;
 using WebMvc.Services.OrderService;
+using WebMvc.Services.RestaurantService;
 
 namespace WebMvc
 {
@@ -66,12 +67,12 @@ namespace WebMvc
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim(ClaimTypes.Role, "worker", "admin"));
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
 
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IOrderService, OrderService>();
         }

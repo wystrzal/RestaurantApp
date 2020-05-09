@@ -35,25 +35,7 @@ namespace Identity
             services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration["ConnectionStrings"]));
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-            })
-                .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddIdentityServer().AddDeveloperSigningCredential()
-            .AddOperationalStore(options =>
-            {
-               options.ConfigureDbContext = builder
-                => builder.UseSqlServer(Configuration["ConnectionStrings"], b => b.MigrationsAssembly("Identity"));  
-               options.EnableTokenCleanup = true;
-               options.TokenCleanupInterval = 30;
-            })
-            .AddInMemoryIdentityResources(Config.GetIdentityResources())
-            .AddInMemoryApiResources(Config.GetApiResources())
-            .AddInMemoryClients(Config.GetClients())
-            .AddAspNetIdentity<User>();
+            services.AddCustomIdentity(Configuration);
 
             services.AddControllersWithViews();
 

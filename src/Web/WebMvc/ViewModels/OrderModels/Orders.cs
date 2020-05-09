@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMvc.Helpers;
 
 namespace WebMvc.Models
 {
@@ -14,7 +15,7 @@ namespace WebMvc.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Table { get; set; }
-        public string OrderStatus { get; set; }
+        public CustomEnums.OrderStatus OrderStatus { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }

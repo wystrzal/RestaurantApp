@@ -76,7 +76,6 @@ export class MenuItemComponent implements OnInit {
         localStorage.setItem("basket", JSON.stringify(this.basketItems));
       }
     }
-    alert("Successfully added!");
     this.basketService.getBasketItems.next(this.basketItems);
   }
 }

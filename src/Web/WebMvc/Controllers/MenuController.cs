@@ -28,5 +28,15 @@ namespace WebMvc.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> CreateItem()
+        {
+            var vm = new CreateMenuItemViewModel
+            {
+                MenuType = await menuService.GetMenuTypes()
+            };
+
+            return View(vm);
+        }
     }
 }

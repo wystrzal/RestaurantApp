@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Identity.Infrastructure.Constants;
 using Identity.Models;
 using IdentityModel;
 using IdentityServer4;
@@ -15,29 +14,29 @@ namespace Identity.Services
 {
     public class IdentityClaimsProfileService : IProfileService
     {
-        private readonly IUserClaimsPrincipalFactory<User> _claimsFactory;
-        private readonly UserManager<User> _userManager;
+        private readonly IUserClaimsPrincipalFactory<User> claimsFactory;
+        private readonly UserManager<User> userManager;
 
 
         public IdentityClaimsProfileService(UserManager<User> userManager,
             IUserClaimsPrincipalFactory<User> claimsFactory)
         {
-            _userManager = userManager;
-            _claimsFactory = claimsFactory;
+            this.userManager = userManager;
+            this.claimsFactory = claimsFactory;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var sub = context.Subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(sub);
-            var principal = await _claimsFactory.CreateAsync(user);
-            var userClaim =await  _userManager.GetClaimsAsync(user);
+            var user = await userManager.FindByIdAsync(sub);
+            var principal = await claimsFactory.CreateAsync(user);
+            var userClaim = await userManager.GetClaimsAsync(user);
             var roles = userClaim.Where(c => c.Type == "role").ToList();
 
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim(JwtClaimTypes.PreferredUserName, user.UserName));
 
+            //Add custom role claims for user.
             if (roles.Count() > 0)
             {
                 foreach (var role in roles)
@@ -52,7 +51,7 @@ namespace Identity.Services
         public async Task IsActiveAsync(IsActiveContext context)
         {
             var sub = context.Subject.GetSubjectId();
-            var user = await _userManager.FindByIdAsync(sub);
+            var user = await userManager.FindByIdAsync(sub);
             context.IsActive = user != null;
         }
     }

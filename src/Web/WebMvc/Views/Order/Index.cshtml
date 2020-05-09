@@ -9,41 +9,7 @@
         }
         else if (User.Claims.Any(c => c.Value == "admin" || c.Value == "restaurant"))
         {
-            @foreach (var order in Model)
-            {
-                @if (order.OrderStatus == "ready")
-                {
-                    <div class="col-md-4 col-12">
-                        <div class="card mb-2">
-                            <h5 class="card-header">New Order</h5>
-                            <div class="card-body">
-                                @if (order.Address != null)
-                                {
-                                    <h5 class="card-title">
-                                        Address: @order.Address
-                                    </h5>
-                                    <h5 class="card-title">
-                                        Phone: @order.PhoneNumber
-                                    </h5>
-                                }
-                                else
-                                {
-                                    <h5 class="card-title">
-                                        Table: @order.Table
-                                    </h5>
-                                }
-
-                                <p class="card-text">Total Price: @order.TotalPrice</p>
-
-                                @if (order.OrderStatus == "ready")
-                                {
-                                    <a href="#" class="btn btn-primary">Delivered</a>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
+           <partial name="_RestaurantOrders" model="Model" />
         }
     </div>
 </div>

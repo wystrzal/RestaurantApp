@@ -19,6 +19,11 @@
 
 .fa {
   font-size: 35px;
+  transition: all 200ms linear;
+
+  &:hover {
+    color: $bronze;
+  }
 }
 
 .description {

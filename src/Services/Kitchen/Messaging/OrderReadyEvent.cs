@@ -8,7 +8,6 @@ namespace Kitchen.Messaging
     public class OrderReadyEvent
     {
         public int OrderId { get; set; }
-        public int MyProperty { get; set; }
         public IEnumerable<OrderIngredients> OrderIngredients { get; set; }
     }
     public class OrderIngredients

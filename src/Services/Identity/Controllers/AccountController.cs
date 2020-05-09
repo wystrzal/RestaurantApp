@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Identity.Extensions;
-using Identity.Infrastructure.Constants;
+using Identity.Helpers;
 using Identity.Models;
 using Identity.Models.ViewModels;
 using IdentityServer4.Events;
@@ -115,15 +115,20 @@ namespace Identity.Controllers
                 return BadRequest(ModelState);
             }
             
-            var user = new User { UserName = model.Name };
+            var user = new User { UserName = model.Username, FirstName = model.FirstName, LastName = model.LastName };
 
             var result = await userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded) return BadRequest(result.Errors);
-            
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("userName", user.UserName));
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Kitchen));
-            //kitchen / restaurant
+
+            if (model.Role == "kitchen")
+            {
+                await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Kitchen));
+            } 
+            else
+            {
+                await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Restaurant));
+            }
 
             return Ok();
         }

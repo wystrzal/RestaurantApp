@@ -46,28 +46,15 @@ namespace Kitchen
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "http://localhost:5000";
-                o.Audience = "menu";
-                o.RequireHttpsMetadata = false;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "kitchen"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
-
             services.AddMvc(options =>
             {
                 options.EnableEndpointRouting = false;
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddCustomAuth();
+
+            services.AddCustomMassTransit();
 
             services.AddSwaggerGen(opt =>
             {
@@ -79,26 +66,6 @@ namespace Kitchen
                 });
             });
 
-            services.AddMassTransit(options =>
-            {
-                options.AddConsumer<OrderReadyEventConsumer>();
-
-                options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-                {
-                    cfg.Host("rabbitmq://localhost", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
-
-                    cfg.ReceiveEndpoint("order_ready", ep =>
-                    {
-                        ep.Bind<OrderReadyEvent>();
-                        ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
-                    });
-                }));
-            });
-            services.AddMassTransitHostedService();
 
             services.AddTransient<IKitchenRepo, KitchenRepo>();
         }
@@ -130,7 +97,7 @@ namespace Kitchen
             app.UseSwagger()
              .UseSwaggerUI(c =>
              {
-                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "MenuApi");
+                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "KitchenApi");
              });
 
             app.UseHttpsRedirection();

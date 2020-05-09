@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Menu.Controllers
 {
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = "Worker")]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase

@@ -43,22 +43,7 @@ namespace Menu
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "http://localhost:5000";
-                o.Audience = "menu";
-                o.RequireHttpsMetadata = false;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "menu"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
+            services.AddCustomAuth();
 
             services.AddMvc(options =>
             {
@@ -72,7 +57,7 @@ namespace Menu
                 {
                     Title = "Menu",
                     Version = "v1",
-                    Description = "Menus Service"
+                    Description = "Menu Service"
                 });
             });
 

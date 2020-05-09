@@ -50,22 +50,8 @@ namespace Order
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "http://localhost:5000";
-                o.Audience = "order";
-                o.RequireHttpsMetadata = false;
-            });
-       
+            services.AddCustomAuth();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
 
             services.AddMvc(options =>
             {
@@ -83,26 +69,7 @@ namespace Order
                 });
             });
 
-            services.AddMassTransit(options =>
-            {
-                options.AddConsumer<OrderReadyEventConsumer>();
-
-                options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-                {
-                    cfg.Host("rabbitmq://localhost", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
-
-                    cfg.ReceiveEndpoint("order_ready", ep =>
-                    {
-                        ep.Bind<OrderReadyEvent>();
-                        ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
-                    });
-                }));
-            });
-            services.AddMassTransitHostedService();
+            services.AddCustomMassTransit();
 
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddScoped<OrderReadyEventConsumer>();
@@ -136,7 +103,7 @@ namespace Order
             app.UseSwagger()
              .UseSwaggerUI(c =>
              {
-                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "MenuApi");
+                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "OrderApi");
              });
 
             app.UseHttpsRedirection();

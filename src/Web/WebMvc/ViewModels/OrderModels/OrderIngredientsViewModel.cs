@@ -9,6 +9,6 @@ namespace WebMvc.ViewModels
     public class OrderIngredientsViewModel
     {
         public int OrderId { get; set; }
-        public IEnumerable<OrderIngredients> OrderIngredients { get; set; }
+        public List<OrderIngredients> OrderIngredients { get; set; }
     }
 }

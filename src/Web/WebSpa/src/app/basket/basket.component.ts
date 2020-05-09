@@ -20,10 +20,13 @@ export class BasketComponent implements OnInit {
 
   ngOnInit() {
     this.basketItems = JSON.parse(localStorage.getItem("basket"));
+    this.countTotalPrice();
+
     this.basketService.getBasketItems.subscribe((basketItems) => {
       this.basketItems = basketItems;
+      this.countTotalPrice();
     });
-    this.countTotalPrice();
+
     this.orderService.submitOrder.subscribe((panelStatus) => {
       this.orderPanel = panelStatus;
     });

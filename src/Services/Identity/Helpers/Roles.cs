@@ -1,6 +1,6 @@
 ﻿
 
-namespace Identity.Infrastructure.Constants
+namespace Identity.Helpers
 {
     public static class Roles
     {

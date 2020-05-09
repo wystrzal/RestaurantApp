@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Order.Data.Repository.MenuRepo;
 using Order.Dto;
+using Order.Helpers;
 using Order.Models;
 
 namespace Order.Controllers
@@ -63,7 +64,7 @@ namespace Order.Controllers
         {
             var orderForAdd = mapper.Map<Orders>(order);
 
-            orderForAdd.OrderStatus = "created";
+            orderForAdd.OrderStatus = CustomEnums.OrderStatus.Created;
 
             orderRepo.Add(orderForAdd);
 
@@ -79,7 +80,7 @@ namespace Order.Controllers
         {
             var orderForAdd = mapper.Map<Orders>(order);
 
-            orderForAdd.OrderStatus = "created";
+            orderForAdd.OrderStatus = CustomEnums.OrderStatus.Created;
 
             orderRepo.Add(orderForAdd);
 

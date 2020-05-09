@@ -26,9 +26,9 @@ namespace WebMvc.Services.MenuService
 
         public async Task<PaginatedItems<MenuItem>> GetMenuItems(int? typeId, int? page)
         {
-            var menuItems = ApiPaths.Menu.GetMenu(baseUrl, typeId ?? 1, page ?? 0);
+            var getMenuItemsUri = ApiPaths.Menu.GetMenu(baseUrl, typeId ?? 1, page ?? 0);
 
-            var dataString = await httpClient.GetStringAsync(menuItems);
+            var dataString = await httpClient.GetStringAsync(getMenuItemsUri);
 
             var response = JsonConvert.DeserializeObject<PaginatedItems<MenuItem>>(dataString);
 
@@ -37,9 +37,9 @@ namespace WebMvc.Services.MenuService
 
         public async Task<IEnumerable<SelectListItem>> GetMenuTypes()
         {
-            var menuTypes = ApiPaths.Menu.GetTypes(baseUrl);
+            var getMenuTypesUri = ApiPaths.Menu.GetTypes(baseUrl);
 
-            var dataString = await httpClient.GetStringAsync(menuTypes);
+            var dataString = await httpClient.GetStringAsync(getMenuTypesUri);
 
             var response = JsonConvert.DeserializeObject<IEnumerable<MenuType>>(dataString);
 

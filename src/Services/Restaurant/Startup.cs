@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GreenPipes;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
+using Restaurant.Extensions;
 
 namespace Kitchen
 {
@@ -33,21 +37,7 @@ namespace Kitchen
         {
             services.AddControllers();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "http://localhost:5000";
-                o.Audience = "restaurant";
-                o.RequireHttpsMetadata = false;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
+            services.AddCustomAuth();
 
             services.AddMvc(options =>
             {
@@ -65,22 +55,7 @@ namespace Kitchen
                 });
             });
 
-            services.AddMassTransit(options =>
-            {
-                options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
-                {
-                    cfg.Host("rabbitmq://localhost", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
-
-                    cfg.ExchangeType = ExchangeType.Fanout;
-
-                }));
-            });
-
-            services.AddMassTransitHostedService();
+            services.AddCustomMassTransit();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +65,28 @@ namespace Kitchen
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseExceptionHandler(builder =>
+            {
+                builder.Run(async context =>
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        context.Response.AddApplicationError(error.Error.Message);
+                        await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
+                    }
+                });
+            });
+
+            app.UseSwagger()
+             .UseSwaggerUI(c =>
+             {
+                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "RestaurantApi");
+             });
 
             app.UseHttpsRedirection();
 
