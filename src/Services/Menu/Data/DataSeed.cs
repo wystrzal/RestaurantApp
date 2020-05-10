@@ -33,7 +33,7 @@ namespace Menu.Data
             {
                 List<MenuType> menuTypes = new List<MenuType>()
                 {
-                    new MenuType {Type = "Non alcoholic drinks"}
+                    new MenuType {Type = "Non alcoholic drinks"},
                     new MenuType {Type = "Burgers"},
                 };
 

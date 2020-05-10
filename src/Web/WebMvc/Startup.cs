@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using WebMvc.Infractructure;
+using WebMvc.Messaging.SignalR;
+using WebMvc.Models;
 using WebMvc.Services.MenuService;
 using WebMvc.Services.OrderService;
 using WebMvc.Services.RestaurantService;
@@ -64,6 +66,7 @@ namespace WebMvc
                     options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
                 });
 
+            services.AddSignalR();
 
             services.AddAuthorization(options =>
             {
@@ -100,7 +103,8 @@ namespace WebMvc
             {
                 endpoints.MapDefaultControllerRoute()
                     .RequireAuthorization();
-                    
+
+                endpoints.MapHub<SignalServerHub>("/SignalServerHub");
             });
         }
     }

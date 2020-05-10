@@ -72,7 +72,6 @@ namespace Order
             services.AddCustomMassTransit();
 
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddScoped<OrderReadyEventConsumer>();
             services.AddTransient<IOrderRepo, OrderRepository>();
         }
 

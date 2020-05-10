@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebMvc.Messaging.SignalR;
+using WebMvc.Models;
 using WebMvc.Services.RestaurantService;
 using WebMvc.ViewModels;
 using WebMvc.ViewModels.OrderModels;
@@ -19,9 +22,9 @@ namespace WebMvc.Controllers
         }
        
         [HttpPost]
-        public IActionResult OrderReady([FromBody]OrderIngredientsViewModel orderIngredientsViewModel)
+        public async Task<IActionResult> OrderReady([FromBody]OrderIngredientsViewModel orderIngredientsViewModel)
         {
-            restaurantService.OrderReady(orderIngredientsViewModel.OrderId, orderIngredientsViewModel.OrderIngredients);
+            await restaurantService.OrderReady(orderIngredientsViewModel.OrderId, orderIngredientsViewModel.OrderIngredients);       
 
             return Ok();
         }
