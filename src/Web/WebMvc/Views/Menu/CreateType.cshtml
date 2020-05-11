@@ -1,0 +1,30 @@
+﻿@model WebMvc.Models.MenuType
+
+@{
+    ViewData["Title"] = "CreateType";
+}
+
+<h1>CreateType</h1>
+
+<div class="row pt-3">
+    <div class="col-12 text-center">
+        @using (Html.BeginForm("CreateTypePOST", "Menu", FormMethod.Post))
+        {
+            <div class="offset-3 col-6">
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Type, new { placeholder = "Name", @class = "form-control" })
+                </div>
+            </div>
+            <div class="offset-3 col-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-info">Back to List</a>
+</div>
+

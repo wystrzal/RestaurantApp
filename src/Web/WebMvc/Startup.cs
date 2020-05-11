@@ -15,7 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using WebMvc.Extensions;
 using WebMvc.Infractructure;
+using WebMvc.Messaging.Consumer;
 using WebMvc.Messaging.SignalR;
 using WebMvc.Models;
 using WebMvc.Services.MenuService;
@@ -40,38 +42,12 @@ namespace WebMvc
 
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = "http://localhost:5000";
-                    options.RequireHttpsMetadata = false;
-
-                    options.ClientId = "mvc";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
-                    options.SaveTokens = true;
-                    options.GetClaimsFromUserInfoEndpoint = true;
-
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-
-                    options.Scope.Add("order");
-                    options.ClaimActions.Add(new MapAllClaimsAction());
-                    options.ClaimActions.DeleteClaim(JwtClaimTypes.Role);
-                    options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
-                });
+            services.AddCustomAuth();
 
             services.AddSignalR();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-            });
+            services.AddCustomMassTransit();
+
 
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

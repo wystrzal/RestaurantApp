@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Common.Messaging;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,17 +15,20 @@ using Order.Models;
 
 namespace Order.Controllers
 {
+    [Authorize(Policy = "Worker")]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepo orderRepo;
         private readonly IMapper mapper;
+        private readonly IBus bus;
 
-        public OrderController(IOrderRepo orderRepo, IMapper mapper)
+        public OrderController(IOrderRepo orderRepo, IMapper mapper, IBus bus)
         {
             this.orderRepo = orderRepo;
             this.mapper = mapper;
+            this.bus = bus;
         }
 
         [HttpGet("delivered")]
@@ -70,6 +74,7 @@ namespace Order.Controllers
 
             if (await orderRepo.SaveAll())
             {
+                await bus.Publish(new OrderCreatedEvent());
                 return CreatedAtAction("GetOrder", new { orderId = orderForAdd.OrderId }, order);
             }
             return BadRequest("Could not add order");
@@ -86,6 +91,7 @@ namespace Order.Controllers
 
             if (await orderRepo.SaveAll())
             {
+                await bus.Publish(new OrderCreatedEvent());
                 return CreatedAtAction("GetOrder", new { orderId = orderForAdd.OrderId }, order);
             }
             return BadRequest("Could not add order");

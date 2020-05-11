@@ -8,11 +8,5 @@ namespace Common.Messaging
     public class OrderReadyEvent
     {
         public int OrderId { get; set; }
-        public IEnumerable<OrderIngredients> OrderIngredients { get; set; }
-    }
-    public class OrderIngredients
-    {
-        public string Name { get; set; }
-        public int Quantity { get; set; }
     }
 }

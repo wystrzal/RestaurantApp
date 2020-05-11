@@ -8,7 +8,6 @@ using WebMvc.Messaging.SignalR;
 using WebMvc.Models;
 using WebMvc.Services.RestaurantService;
 using WebMvc.ViewModels;
-using WebMvc.ViewModels.OrderModels;
 
 namespace WebMvc.Controllers
 {
@@ -22,9 +21,9 @@ namespace WebMvc.Controllers
         }
        
         [HttpPost]
-        public async Task<IActionResult> OrderReady([FromBody]OrderIngredientsViewModel orderIngredientsViewModel)
+        public async Task<IActionResult> OrderReady([FromBody]int orderId)
         {
-            await restaurantService.OrderReady(orderIngredientsViewModel.OrderId, orderIngredientsViewModel.OrderIngredients);       
+            await restaurantService.OrderReady(orderId);       
 
             return Ok();
         }

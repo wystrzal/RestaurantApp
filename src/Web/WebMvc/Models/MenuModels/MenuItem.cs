@@ -26,10 +26,5 @@ namespace WebMvc.Models
         public int MenuTypeId { get; set; }
 
         public MenuType MenuType { get; set; }
-
-        public MenuItem()
-        {
-            Available = true;
-        }
     }
 }

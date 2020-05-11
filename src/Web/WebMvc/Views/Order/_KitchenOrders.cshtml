@@ -15,19 +15,6 @@
                     {
                         <p class="card-text">Name: @item.ProductName</p>
                         <p class="card-text mb-3 border-bottom">Quantity: @item.Quantity</p>
-
-                    }
-                    @{
-                        var orderIngredients = new List<WebMvc.ViewModels.OrderModels.OrderIngredients>();
-                        var orderIngredientsVM = new WebMvc.ViewModels.OrderIngredientsViewModel();
-
-                        foreach (var item in order.OrderItems)
-                        {
-                            orderIngredients.Add(new WebMvc.ViewModels.OrderModels.OrderIngredients
-                            { Name = item.ProductName, Quantity = item.Quantity });
-                        }
-                        orderIngredientsVM.OrderId = order.OrderId;
-                        orderIngredientsVM.OrderIngredients = orderIngredients;
                     }
 
                     <button class="btn btn-success" id="ready-@order.OrderId">Ready</button>
@@ -35,13 +22,12 @@
                     <script>
                                     $(document).ready(function () {
                                         $("#ready-@order.OrderId").click(function () {
-                                            var orderIngredientsViewModel
-                                                = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(orderIngredientsVM));
-
+                                            var orderId = @order.OrderId;
+                                               
                                             $.ajax({
                                                 type: "POST",
                                                 url: "/Restaurant/OrderReady",
-                                                data: JSON.stringify(orderIngredientsViewModel),
+                                                data: JSON.stringify(orderId),
                                                 contentType: "application/json; charset=utf-8",
                                                 dataType: "json",
                                                 failure: function (response) {
@@ -59,10 +45,5 @@
         </div>
     }
 }
-
-<div class="col-12 text-center">
-    <h2>Here</h2>
-    <ul id="test"></ul>
-</div>
 
 

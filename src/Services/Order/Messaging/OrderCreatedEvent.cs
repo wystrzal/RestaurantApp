@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace Common.Messaging
 {
-    public class OrderReadyEvent
+    public class OrderCreatedEvent
     {
-        public int OrderId { get; set; }
     }
 }

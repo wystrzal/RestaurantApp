@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebMvc.Models;
 using WebMvc.Services.MenuService;
 using WebMvc.ViewModels;
 
@@ -38,5 +39,25 @@ namespace WebMvc.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> CreateItemPOST(MenuItem menuItem)
+        {
+            await menuService.CreateMenuItem(menuItem);
+
+            return RedirectToAction("CreateItem");
+        }
+
+        public IActionResult CreateType()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> CreateTypePOST(MenuType menuType)
+        {
+            await menuService.CreateMenuType(menuType);
+
+            return RedirectToAction("CreateType");
+        }
+
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Menu.Controllers
 {
-    [Authorize(Policy = "Worker")]
+    [Authorize(Policy = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase
@@ -55,7 +55,7 @@ namespace Menu.Controllers
             return Ok(menuItem);
         }
 
-        //TODO
+
         [HttpPost("new/item")]
         public async Task<IActionResult> AddNewItem(MenuItem menuItem)
         {
@@ -71,7 +71,6 @@ namespace Menu.Controllers
             return BadRequest("Model is not valid.");
         }
 
-        //TODO
         [HttpPost("new/type")]
         public async Task<IActionResult> AddNewType(MenuType menuType)
         {

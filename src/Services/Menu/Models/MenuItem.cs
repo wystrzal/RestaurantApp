@@ -27,8 +27,6 @@ namespace Menu.Models
 
         public MenuType MenuType { get; set; }
 
-        public ICollection<MenuIngredientsItems> MenuIngredientsItems { get; set; }
-
         public MenuItem()
         {
             Available = true;

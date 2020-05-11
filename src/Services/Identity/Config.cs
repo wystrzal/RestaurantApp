@@ -26,7 +26,6 @@ namespace Identity
             {
                 new ApiResource("menu", "Menu Service"),
                 new ApiResource("order", "Order Service"),
-                new ApiResource("kitchen", "Kitchen Service"),
                 new ApiResource("restaurant", "Restaurant Service")
 
             };
@@ -50,7 +49,6 @@ namespace Identity
                         IdentityServerConstants.StandardScopes.Profile,
                         "menu",
                         "order",
-                        "kitchen",
                         "restaurant"
                     }               
                 },
@@ -60,7 +58,7 @@ namespace Identity
                     ClientSecrets = {new Secret("secret".Sha256())},
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = {"menu", "order", "kitchen", "restaurant"},  
+                    AllowedScopes = {"menu", "order", "restaurant"},  
                 }
             };
         }

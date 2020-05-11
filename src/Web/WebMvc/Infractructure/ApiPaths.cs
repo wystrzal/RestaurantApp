@@ -9,6 +9,16 @@ namespace WebMvc.Infractructure
     {
         public static class Menu
         {
+            public static string PostMenuItem(string baseUri)
+            {
+                return $"{baseUri}new/item";
+            }
+
+            public static string PostMenuType(string baseUri)
+            {
+                return $"{baseUri}new/type";
+            }
+                
             public static string GetMenu(string baseUri, int typeId, int page)
             {
                 return $"{baseUri}type/{typeId}?pageIndex={page}";

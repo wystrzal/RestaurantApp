@@ -12,5 +12,7 @@ namespace WebMvc.Services.MenuService
     {
         Task<PaginatedItems<MenuItem>> GetMenuItems(int? typeId, int? page);
         Task<IEnumerable<SelectListItem>> GetMenuTypes();
+        Task CreateMenuItem(MenuItem menuItem);
+        Task CreateMenuType(MenuType menuType);
     }
 }

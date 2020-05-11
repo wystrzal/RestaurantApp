@@ -1,14 +1,14 @@
 ﻿using Common.Messaging;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Order.Messaging.Consumers;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMvc.Messaging.Consumer;
 
-namespace Order.Extensions
+namespace WebMvc.Extensions
 {
     public static class CustomMassTransit
     {
@@ -16,7 +16,7 @@ namespace Order.Extensions
         {
             services.AddMassTransit(options =>
             {
-                options.AddConsumer<OrderReadyEventConsumer>();
+                options.AddConsumer<OrderCreatedEventConsumer>();
 
                 options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
@@ -27,10 +27,10 @@ namespace Order.Extensions
                     });
                     cfg.ExchangeType = ExchangeType.Fanout;
 
-                    cfg.ReceiveEndpoint("order_ready", ep =>
+                    cfg.ReceiveEndpoint("order_created", ep =>
                     {
-                        ep.Bind<OrderReadyEvent>();
-                        ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
+                        ep.Bind<OrderCreatedEvent>();
+                        ep.ConfigureConsumer<OrderCreatedEventConsumer>(provider);
                     });
                 }));
             });

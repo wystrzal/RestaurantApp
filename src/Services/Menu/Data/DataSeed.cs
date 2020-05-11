@@ -10,31 +10,12 @@ namespace Menu.Data
     {
         public static void AddDataToDb(DataContext dataContext)
         {
-            if (!dataContext.MenuIngredients.Any())
-            {
-                List<MenuIngredient> menuIngredients = new List<MenuIngredient>()
-                {
-                    new MenuIngredient {Name = "Tomato"},
-                    new MenuIngredient {Name = "Beef"},
-                    new MenuIngredient {Name = "Chicken"},
-                    new MenuIngredient {Name = "Salad"},
-                    new MenuIngredient {Name = "Cheese"},
-                    new MenuIngredient {Name = "Water"},
-                    new MenuIngredient {Name = "Lemon"},
-                    new MenuIngredient {Name = "Orange"},
-                    new MenuIngredient {Name = "Apple"},
-                };
-
-                dataContext.AddRange(menuIngredients);
-                dataContext.SaveChanges();
-            }
-
             if (!dataContext.MenuTypes.Any())
             {
                 List<MenuType> menuTypes = new List<MenuType>()
                 {
-                    new MenuType {Type = "Non alcoholic drinks"},
                     new MenuType {Type = "Burgers"},
+                    new MenuType {Type = "Non alcoholic drinks"}
                 };
 
                 dataContext.MenuTypes.AddRange(menuTypes);
@@ -66,29 +47,6 @@ namespace Menu.Data
                 };
 
                 dataContext.MenuItems.AddRange(menuItems);
-                dataContext.SaveChanges();
-            }
-
-            if (!dataContext.MenuIngredientsItems.Any())
-            {
-                List<MenuIngredientsItems> menuIngredientsItems = new List<MenuIngredientsItems>()
-                {
-                    new MenuIngredientsItems { MenuIngredientId = 1, MenuItemId = 1, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 1, MenuItemId = 2, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 1, MenuItemId = 3, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 2, MenuItemId = 1, Quantity = 0.3M},
-                    new MenuIngredientsItems { MenuIngredientId = 2, MenuItemId = 3, Quantity = 0.3M},
-                    new MenuIngredientsItems { MenuIngredientId = 3, MenuItemId = 2, Quantity = 0.3M},
-                    new MenuIngredientsItems { MenuIngredientId = 4, MenuItemId = 1, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 4, MenuItemId = 2, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 5, MenuItemId = 3, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 6, MenuItemId = 4, Quantity = 0.5M},
-                    new MenuIngredientsItems { MenuIngredientId = 7, MenuItemId = 4, Quantity = 0.2M},
-                    new MenuIngredientsItems { MenuIngredientId = 8, MenuItemId = 5, Quantity = 0.5M},
-                    new MenuIngredientsItems { MenuIngredientId = 9, MenuItemId = 6, Quantity = 0.5M},
-                };
-
-                dataContext.AddRange(menuIngredientsItems);
                 dataContext.SaveChanges();
             }
         }
