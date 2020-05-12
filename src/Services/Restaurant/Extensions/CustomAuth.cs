@@ -25,7 +25,7 @@ namespace Restaurant.Extensions
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "restaurant", "admin"));
+                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "restaurant"));
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
         }

@@ -1,5 +1,5 @@
 ﻿@model WebMvc.ViewModels.MenuViewModel
-
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 
 <h1>Menu Panel</h1>
 
@@ -10,30 +10,43 @@
 
 <partial name="_MenuType" model="Model" />
 
-<div class="row text-center pt-3 pb-1">
-    <div class="col-md-4">
-        <h6>Name:</h6>
-    </div>
-    <div class="col-md-2">
-        <h6>Price:</h6>
-    </div>
-    <div class="col-md-6">
-        <h6>Description:</h6>
-    </div>
-</div>
 @foreach (var item in Model.MenuItem)
 {
-    <div class="row text-center">
-        <div class="col-md-4 col-12">
-            @item.Name
-        </div>
-        <div class="col-md-2 col-12">
-            @item.Price$
-        </div>
-        <div class="col-md-6 col-12">
-            @item.Description
-        </div>
+<div id="item-@item.Id" class="row text-center">
+    <div class="col-md-3 col-12 mb-1">
+       <h6>Name</h6> @item.Name
     </div>
+    <div class="col-md-2 col-12 mb-1">
+       <h6>Price</h6> @item.Price$
+    </div>
+    <div class="col-md-5 col-12 mb-1">
+        <h6>Description:</h6> @item.Description
+    </div>
+    <div class="col-md-2 col-12 mb-1">
+        <button id="delete-@item.Id" class="btn btn-danger">Delete</button>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#delete-@item.Id").click(function () {
+                var itemId = @item.Id;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "Menu/DeleteItem",
+                        data: JSON.stringify(itemId),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        failure: function (response) {
+                            console.log(response);
+                        },
+                        complete: function () {
+                            $("#item-@item.Id").remove();
+                        }
+                    });
+            });
+        });
+    </script>
+</div>
 }
 
 

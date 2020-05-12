@@ -25,7 +25,7 @@ namespace Order.Extensions
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "order", "admin"));
+                options.AddPolicy("Worker", policy => policy.RequireClaim("scope", "order"));
                 options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
             });
         }

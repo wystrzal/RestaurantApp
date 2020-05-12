@@ -1,23 +1,47 @@
-﻿@model WebMvc.Models.MenuType
+﻿@model WebMvc.ViewModels.CreateMenuTypeViewModel
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 
 @{
     ViewData["Title"] = "CreateType";
 }
 
-<h1>CreateType</h1>
+<h1>Create Type</h1>
 
-<div class="row pt-3">
-    <div class="col-12 text-center">
+<div class="row pt-3 text-center">
+    <div class="col-6 offset-3 pb-5">
+        <select id="selectType" asp-for="@Model.MenuType.Id" asp-items="Model.SelectListTypes" class="form-control"></select>
+        <button id="deleteType" class="btn btn-danger mt-2">Delete</button>
+
+        <script>
+            $(document).ready(function () {
+                $("#deleteType").click(function () {
+                    var typeId = $("#selectType").children("option:selected").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Menu/DeleteType",
+                        data: JSON.stringify(parseInt(typeId)),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        failure: function (response) {
+                            console.log(response);
+                        },
+                        complete: function () {
+                            $("#selectType").children("option:selected").remove();
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </div>
+    <div class="col-12">
         @using (Html.BeginForm("CreateTypePOST", "Menu", FormMethod.Post))
         {
             <div class="offset-3 col-6">
                 <div class="form-group">
-                    @Html.TextBoxFor(m => m.Type, new { placeholder = "Name", @class = "form-control" })
-                </div>
-            </div>
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Create</button>
+                    @Html.TextBoxFor(m => m.MenuType.Type, new { placeholder = "Name", @class = "form-control" })
+                    <button type="submit" class="btn btn-success mt-2">Create</button>
                 </div>
             </div>
         }

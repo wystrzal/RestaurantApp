@@ -14,11 +14,23 @@ namespace Identity.Data
         {
             if (!userManager.Users.Any())
             {
-                User user = new User { UserName = "admin" };
+                var users = new List<User>
+                {
+                    new User {UserName = "Admin"},
+                    new User {UserName = "Restaurant"},
+                    new User {UserName = "Kitchen"}
+                };
 
-                userManager.CreateAsync(user, "Admin123").Wait();
+                foreach (var user in users)
+                {
+                    userManager.CreateAsync(user, user.UserName + "123").Wait();
+                }
 
-                userManager.AddClaimAsync(user, new System.Security.Claims.Claim("role", Roles.Admin)).Wait();
+                userManager.AddClaimAsync(users[0], new System.Security.Claims.Claim("role", Roles.Admin)).Wait();
+                userManager.AddClaimAsync(users[1], new System.Security.Claims.Claim("role", Roles.Restaurant)).Wait();
+                userManager.AddClaimAsync(users[2], new System.Security.Claims.Claim("role", Roles.Kitchen)).Wait();
+
+
             };
         }
     }

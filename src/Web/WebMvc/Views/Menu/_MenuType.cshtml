@@ -4,7 +4,9 @@
     <div class="col-12 col-md-6 offset-md-3">
         <form asp-action="Index" asp-controller="Menu" method="post">
             <div class="form-group">
-                <select id="menuType" asp-for="@Model.TypeId" asp-items="@Model.MenuType" class="form-control pb-2"></select>
+                <select id="menuType" asp-for="@Model.TypeId" asp-items="@Model.MenuType" class="form-control pb-2">
+                    <option selected="selected">Select Type:</option>
+                </select>
                 <script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
                 <script>
                     $(document).ready(function () {

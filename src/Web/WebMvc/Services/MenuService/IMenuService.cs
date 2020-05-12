@@ -14,5 +14,7 @@ namespace WebMvc.Services.MenuService
         Task<IEnumerable<SelectListItem>> GetMenuTypes();
         Task CreateMenuItem(MenuItem menuItem);
         Task CreateMenuType(MenuType menuType);
+        Task DeleteMenuItem(int itemId);
+        Task DeleteMenuType(int typeId);
     }
 }

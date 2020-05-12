@@ -9,6 +9,16 @@ namespace WebMvc.Infractructure
     {
         public static class Menu
         {
+            public static string DeleteMenuType(string baseUri, int typeId)
+            {
+                return $"{baseUri}delete/type/{typeId}";
+            }
+            
+            public static string DeleteMenuItem(string baseUri, int itemId)
+            {
+                return $"{baseUri}delete/{itemId}";
+            }
+
             public static string PostMenuItem(string baseUri)
             {
                 return $"{baseUri}new/item";
@@ -23,6 +33,7 @@ namespace WebMvc.Infractructure
             {
                 return $"{baseUri}type/{typeId}?pageIndex={page}";
             }
+
             public static string GetTypes(string baseUri)
             {
                 return $"{baseUri}types";

@@ -28,6 +28,24 @@ namespace WebMvc.Services.MenuService
             baseUrl = "http://localhost:5200/api/menu/";
         }
 
+        public async Task DeleteMenuType(int typeId)
+        {
+            var deleteTypeUri = ApiPaths.Menu.DeleteMenuType(baseUrl, typeId);
+
+            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+
+            await httpClient.DeleteAsync(deleteTypeUri, accessToken);
+        }
+
+        public async Task DeleteMenuItem(int itemId)
+        {
+            var deleteItemUri = ApiPaths.Menu.DeleteMenuItem(baseUrl, itemId);
+
+            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+
+            await httpClient.DeleteAsync(deleteItemUri, accessToken);
+        }
+
         public async Task CreateMenuItem(MenuItem menuItem)
         {
             var postMenuItemUri = ApiPaths.Menu.PostMenuItem(baseUrl);

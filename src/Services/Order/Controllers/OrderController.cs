@@ -39,7 +39,6 @@ namespace Order.Controllers
             return Ok(orders);
         }
             
-        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetNotDeliveredOrders()
         {

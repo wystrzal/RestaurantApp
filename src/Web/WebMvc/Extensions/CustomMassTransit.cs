@@ -17,6 +17,7 @@ namespace WebMvc.Extensions
             services.AddMassTransit(options =>
             {
                 options.AddConsumer<OrderCreatedEventConsumer>();
+                options.AddConsumer<OrderReadyEventConsumer>();
 
                 options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
@@ -27,10 +28,16 @@ namespace WebMvc.Extensions
                     });
                     cfg.ExchangeType = ExchangeType.Fanout;
 
-                    cfg.ReceiveEndpoint("order_created", ep =>
+                    cfg.ReceiveEndpoint("order_created_mvc", ep =>
                     {
                         ep.Bind<OrderCreatedEvent>();
                         ep.ConfigureConsumer<OrderCreatedEventConsumer>(provider);
+                    });
+
+                    cfg.ReceiveEndpoint("order_ready_mvc", ep =>
+                    {
+                        ep.Bind<OrderReadyEvent>();
+                        ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
                     });
                 }));
             });

@@ -107,7 +107,6 @@ namespace Menu.Controllers
             return BadRequest("Could not delete menu item.");
         }
 
-        //TODO
         [HttpDelete("delete/type/{typeId}")]
         public async Task<IActionResult> DeleteType(int typeId)
         {
@@ -126,29 +125,6 @@ namespace Menu.Controllers
             }
 
             return BadRequest("Could not delete menu type");
-        }
-
-        //TODO
-        [HttpPut]
-        public async Task<IActionResult> UpdateItem(MenuItem itemToUpdate)
-        {
-            var menuItem = await menuRepository.GetById<MenuItem>(itemToUpdate.Id);
-
-            if (menuItem == null)
-            {
-                return NotFound("Could not find menu item.");
-            }
-
-            menuItem = itemToUpdate;
-
-            menuRepository.Update<MenuItem>(menuItem);
-
-            if (await menuRepository.SaveAll())
-            {
-                return Ok();
-            }
-
-            return BadRequest("Could not update menu item.");
         }
     }
 }

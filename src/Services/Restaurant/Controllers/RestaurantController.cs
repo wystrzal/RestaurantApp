@@ -29,5 +29,11 @@ namespace Restaurant.Controllers
             return Ok();
         }
 
+        [HttpPost("{orderId}")]
+        public async Task<IActionResult> OrderDelivered(int orderId)
+        {
+            return Ok();
+        }
+
     }
 }
