@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
-using Order.Models;
+using Menu.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Order.Dto.AutoMapper
+namespace Menu.Dto.AutoMapper
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            CreateMap<OrderForAddItemDto, OrderItem>();
+            CreateMap<MenuForAddItemDto, MenuItem>();
 
-            CreateMap<OrderForAddWorkerDto, Orders>();
+            CreateMap<MenuForAddTypeDto, MenuType>();
 
-            CreateMap<OrderForAddClientDto, Orders>();
+            CreateMap<MenuType, MenuForReturnTypesDto>();
         }
     }
 }

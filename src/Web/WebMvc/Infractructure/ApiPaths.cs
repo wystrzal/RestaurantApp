@@ -51,7 +51,11 @@ namespace WebMvc.Infractructure
         {
             public static string OrderReady(string baseUri, int orderId)
             {
-                return $"{baseUri}{orderId}";
+                return $"{baseUri}ready/{orderId}";
+            }
+            public static string OrderDelivered(string baseUri, int orderId)
+            {
+                return $"{baseUri}delivered/{orderId}";
             }
         }
     }

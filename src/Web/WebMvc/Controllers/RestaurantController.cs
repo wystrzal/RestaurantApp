@@ -27,5 +27,13 @@ namespace WebMvc.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> OrderDelivered([FromBody]int orderId)
+        {
+            await restaurantService.OrderDelivered(orderId);
+
+            return Ok();
+        }
     }
 }

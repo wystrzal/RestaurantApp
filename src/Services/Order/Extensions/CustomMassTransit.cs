@@ -17,6 +17,7 @@ namespace Order.Extensions
             services.AddMassTransit(options =>
             {
                 options.AddConsumer<OrderReadyEventConsumer>();
+                options.AddConsumer<OrderDeliveredEventConsumer>();
 
                 options.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
@@ -31,6 +32,12 @@ namespace Order.Extensions
                     {
                         ep.Bind<OrderReadyEvent>();
                         ep.ConfigureConsumer<OrderReadyEventConsumer>(provider);
+                    });
+
+                    cfg.ReceiveEndpoint("order_delivered", ep =>
+                    {
+                        ep.Bind<OrderDeliveredEvent>();
+                        ep.ConfigureConsumer<OrderDeliveredEventConsumer>(provider);
                     });
                 }));
             });

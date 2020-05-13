@@ -15,8 +15,11 @@ namespace Order.Models
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public string Table { get; set; }
+
+        [Required]
         public CustomEnums.OrderStatus OrderStatus { get; set; }
 
+        [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }

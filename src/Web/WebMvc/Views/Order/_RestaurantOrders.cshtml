@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<WebMvc.Models.Orders>
+<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
 <script src="~/js/signalr/dist/browser/signalr.js" type="text/javascript"></script>
 <script src="~/js/orderReady.js"></script>
 
@@ -10,7 +11,7 @@
 {
     @if (order.OrderStatus == WebMvc.Helpers.CustomEnums.OrderStatus.Ready)
     {
-        <div class="col-md-4 col-12">
+        <div class="col-md-4 col-12" id="order-@order.OrderId">
             <div class="card mb-2">
                 <h5 class="card-header">New Order</h5>
                 <div class="card-body">
@@ -32,10 +33,29 @@
 
                     <p class="card-text">Total Price: @order.TotalPrice</p>
 
-                    @if (order.OrderStatus == WebMvc.Helpers.CustomEnums.OrderStatus.Ready)
-                    {
-                        <a href="#" class="btn btn-success">Delivered</a>
-                    }
+                    <button id="delivered-@order.OrderId" class="btn btn-success">Delivered</button>
+                    <script>
+                                    $(document).ready(function () {
+                                        $("#delivered-@order.OrderId").click(function () {
+                                            var orderId = @order.OrderId;
+
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "/Restaurant/OrderDelivered",
+                                                data: JSON.stringify(orderId),
+                                                contentType: "application/json; charset=utf-8",
+                                                dataType: "json",
+                                                failure: function (response) {
+                                                    console.log(response);
+                                                },
+                                                complete: function () {
+                                                    $("#order-@order.OrderId").remove();
+                                                }
+                                            })
+                                        });
+                                    });
+                    </script>
+
                 </div>
             </div>
         </div>

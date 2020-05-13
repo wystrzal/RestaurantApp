@@ -28,5 +28,14 @@ namespace WebMvc.Services.RestaurantService
 
             await httpClient.PostAsync(orderReadyUri, orderId, accessToken);
         }
+
+        public async Task OrderDelivered(int orderId)
+        {
+            var orderDeliveredUri = ApiPaths.Restaurant.OrderDelivered(baseUri, orderId);
+
+            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+
+            await httpClient.PostAsync(orderDeliveredUri, orderId, accessToken);
+        }
     }
 }

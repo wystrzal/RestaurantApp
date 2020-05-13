@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Menu.ViewModel
 {
-    public class PaginatedItemsViewModel<TEntity> where TEntity : class
+    public class PaginatedItemsDto<TEntity> where TEntity : class
     {
         public int PageIndex { get; private set; }
 
@@ -15,7 +15,7 @@ namespace Menu.ViewModel
 
         public IEnumerable<TEntity> Data { get; private set; }
 
-        public PaginatedItemsViewModel(int pageIndex, int count, IEnumerable<TEntity> data)
+        public PaginatedItemsDto(int pageIndex, int count, IEnumerable<TEntity> data)
         {
             this.PageIndex = pageIndex;
             this.PageSize = 5;

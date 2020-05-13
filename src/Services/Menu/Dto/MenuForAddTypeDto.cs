@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebMvc.Models
+namespace Menu.Dto
 {
-    public class MenuType
+    public class MenuForAddTypeDto
     {
-        public int Id { get; set; }
+        [Required]
         public string Type { get; set; }
     }
 }

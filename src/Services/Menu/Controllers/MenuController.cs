@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Menu.Data.Repository;
 using Menu.Data.Repository.MenuRepo;
+using Menu.Dto;
+using Menu.Dto.AutoMapper;
 using Menu.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,10 +20,12 @@ namespace Menu.Controllers
     public class MenuController : ControllerBase
     {
         private readonly IMenuRepository menuRepository;
+        private readonly IMapper mapper;
 
-        public MenuController(IMenuRepository menuRepository)
+        public MenuController(IMenuRepository menuRepository, IMapper mapper)
         {
             this.menuRepository = menuRepository;
+            this.mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -38,55 +43,42 @@ namespace Menu.Controllers
         {
             var menuTypes = await menuRepository.GetAll<MenuType>();
 
-            return Ok(menuTypes);
+            var menuForReturn = mapper.Map<IEnumerable<MenuForReturnTypesDto>>(menuTypes);
+
+            return Ok(menuForReturn);
         }
-
-        [AllowAnonymous]
-        [HttpGet("{itemId}")]
-        public async Task<IActionResult> GetMenuItem(int itemId)
-        {
-            var menuItem = await menuRepository.GetById<MenuItem>(itemId);
-
-            if (menuItem == null)
-            {
-                return NotFound("Could not find menu item.");
-            }
-
-            return Ok(menuItem);
-        }
-
 
         [HttpPost("new/item")]
-        public async Task<IActionResult> AddNewItem(MenuItem menuItem)
+        public async Task<IActionResult> AddNewItem(MenuForAddItemDto menuForAddItemDto)
         {
-            if (ModelState.IsValid)
+            var menuItemForAdd = mapper.Map<MenuItem>(menuForAddItemDto);
+
+            menuRepository.Add(menuItemForAdd);
+
+            if (await menuRepository.SaveAll())
             {
-                menuRepository.Add(menuItem);
-                if (await menuRepository.SaveAll())
-                {
-                    return Ok();
-                }
-                return BadRequest("Could not add menu item.");
+                return Ok();
             }
-            return BadRequest("Model is not valid.");
+
+            return BadRequest("Could not add menu item.");
         }
 
         [HttpPost("new/type")]
-        public async Task<IActionResult> AddNewType(MenuType menuType)
+        public async Task<IActionResult> AddNewType(MenuForAddTypeDto menuForAddTypeDto)
         {
-            if (ModelState.IsValid)
+            var menuTypeForAdd = mapper.Map<MenuType>(menuForAddTypeDto);
+
+            menuRepository.Add(menuTypeForAdd);
+
+            if (await menuRepository.SaveAll())
             {
-                menuRepository.Add(menuType);
-                if (await menuRepository.SaveAll())
-                {
-                    return Ok();
-                }
-                return BadRequest("Could not add menu item.");
+                return Ok();
             }
-            return BadRequest("Model is not valid.");
+            
+            return BadRequest("Could not add menu item.");
         }
 
-        //TODO
+
         [HttpDelete("delete/{itemId}")]
         public async Task<IActionResult> DeleteItem(int itemId)
         {

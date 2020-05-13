@@ -13,16 +13,16 @@
 @foreach (var item in Model.MenuItem)
 {
 <div id="item-@item.Id" class="row text-center">
-    <div class="col-md-3 col-12 mb-1">
-       <h6>Name</h6> @item.Name
+    <div class="col-md-3 col-12 mb-3">
+       <h6>Name:</h6> @item.Name
     </div>
-    <div class="col-md-2 col-12 mb-1">
-       <h6>Price</h6> @item.Price$
+    <div class="col-md-2 col-12 mb-3">
+       <h6>Price:</h6> @item.Price$
     </div>
-    <div class="col-md-5 col-12 mb-1">
+    <div class="col-md-5 col-12 mb-3">
         <h6>Description:</h6> @item.Description
     </div>
-    <div class="col-md-2 col-12 mb-1">
+    <div class="col-md-2 col-12 mb-3">
         <button id="delete-@item.Id" class="btn btn-danger">Delete</button>
     </div>
     <script>

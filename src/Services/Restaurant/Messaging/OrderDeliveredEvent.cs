@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace Common.Messaging
 {
-    public class OrderReadyEvent
+    public class OrderDeliveredEvent
     {
         public int OrderId { get; set; }
-        public OrderReadyEvent(int orderId)
+
+        public OrderDeliveredEvent(int orderId)
         {
             this.OrderId = orderId;
         }

@@ -45,28 +45,14 @@ namespace Identity.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginDto model, string button)
+        public async Task<IActionResult> Login(LoginDto model)
         {
             var context = await interaction.GetAuthorizationContextAsync(model.ReturnUrl);
-
-            // The user clicked the "cancel" button.
-            if (button != "login")
-            {
-                if (context != null)
-                {
-                    await interaction.GrantConsentAsync(context, ConsentResponse.Denied);
-
-                    return Redirect(model.ReturnUrl);
-                }
-                else
-                {
-                    return Redirect("~/");
-                }
-            }
 
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByNameAsync(model.Username);
+
                 if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
                 {
                     await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
@@ -108,7 +94,7 @@ namespace Identity.Controllers
 
         [HttpPost]
         [Route("api/[controller]")]
-        public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody]RegisterDto model)
         {
             if (!ModelState.IsValid)
             {

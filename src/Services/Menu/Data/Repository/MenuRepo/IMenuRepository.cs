@@ -10,6 +10,6 @@ namespace Menu.Data.Repository.MenuRepo
 {
     public interface IMenuRepository : IBaseRepository
     {
-        Task<PaginatedItemsViewModel<MenuItem>> GetMenu(int typeId, int pageIndex);
+        Task<PaginatedItemsDto<MenuItem>> GetMenu(int typeId, int pageIndex);
     }
 }

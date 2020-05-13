@@ -22,16 +22,17 @@ namespace Restaurant.Controllers
             this.bus = bus;
         }
 
-        [HttpPost("{orderId}")]
+        [HttpPost("ready/{orderId}")]
         public async Task<IActionResult> OrderReady(int orderId)
         {
-            await bus.Publish(new OrderReadyEvent() { OrderId = orderId });
+            await bus.Publish(new OrderReadyEvent(orderId));
             return Ok();
         }
 
-        [HttpPost("{orderId}")]
+        [HttpPost("delivered/{orderId}")]
         public async Task<IActionResult> OrderDelivered(int orderId)
         {
+            await bus.Publish(new OrderDeliveredEvent(orderId));
             return Ok();
         }
 

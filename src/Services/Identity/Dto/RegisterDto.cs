@@ -3,7 +3,7 @@
 
 namespace Identity.Models.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterDto
     {
         [Required]
         [StringLength(20, MinimumLength = 2)]
@@ -16,6 +16,7 @@ namespace Identity.Models.ViewModels
         [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
         // kitchen / restaurant

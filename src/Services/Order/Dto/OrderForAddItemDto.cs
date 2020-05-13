@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Order.Dto
 {
-    public class OrderItemForAddDto
+    public class OrderForAddItemDto
     {
         [Required]
         public string ProductName { get; set; }

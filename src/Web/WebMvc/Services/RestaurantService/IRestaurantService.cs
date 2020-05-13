@@ -8,5 +8,6 @@ namespace WebMvc.Services.RestaurantService
     public interface IRestaurantService
     {
         Task OrderReady(int orderId);
+        Task OrderDelivered(int orderId);
     }
 }

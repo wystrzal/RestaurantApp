@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Menu.Data;
 using Menu.Data.Repository;
 using Menu.Data.Repository.MenuRepo;
@@ -60,6 +61,8 @@ namespace Menu
                     Description = "Menu Service"
                 });
             });
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddTransient<IMenuRepository, MenuRepository>();
         }
