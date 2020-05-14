@@ -12,9 +12,12 @@ namespace Order.Models
     {
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
+
+        [Required]
         public string PhoneNumber { get; set; }
+
+        [Required]
         public string Address { get; set; }
-        public string Table { get; set; }
 
         [Required]
         public CustomEnums.OrderStatus OrderStatus { get; set; }

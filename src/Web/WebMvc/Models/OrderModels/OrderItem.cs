@@ -14,9 +14,8 @@ namespace WebMvc.Models
         [Required]
         public string ProductName { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
         [Required]
-        public int ProductPrice { get; set; }
+        public decimal ProductPrice { get; set; }
 
         [Required]
         public int Quantity { get; set; }

@@ -7,6 +7,14 @@ namespace WebMvc.Infractructure
 {
     public class ApiPaths
     {
+        public static class Account
+        {
+            public static string GetUsers(string baseUri)
+            {
+                return $"{baseUri}";
+            }
+        }
+        
         public static class Menu
         {
             public static string DeleteMenuType(string baseUri, int typeId)

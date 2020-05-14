@@ -63,24 +63,7 @@ namespace Order.Controllers
 
         [AllowAnonymous]
         [HttpPost("client")]
-        public async Task<IActionResult> NewOrderClient(OrderForAddClientDto order)
-        {
-            var orderForAdd = mapper.Map<Orders>(order);
-
-            orderForAdd.OrderStatus = CustomEnums.OrderStatus.Created;
-
-            orderRepo.Add(orderForAdd);
-
-            if (await orderRepo.SaveAll())
-            {
-                await bus.Publish(new OrderCreatedEvent());
-                return CreatedAtAction("GetOrder", new { orderId = orderForAdd.OrderId }, order);
-            }
-            return BadRequest("Could not add order");
-        }
-
-        [HttpPost("worker")]
-        public async Task<IActionResult> NewOrderWorker(OrderForAddWorkerDto order)
+        public async Task<IActionResult> NewOrderClient(OrderForAddDto order)
         {
             var orderForAdd = mapper.Map<Orders>(order);
 

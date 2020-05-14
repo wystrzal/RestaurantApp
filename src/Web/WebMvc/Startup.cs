@@ -20,6 +20,7 @@ using WebMvc.Infractructure;
 using WebMvc.Messaging.Consumer;
 using WebMvc.Messaging.SignalR;
 using WebMvc.Models;
+using WebMvc.Services.AccountService;
 using WebMvc.Services.MenuService;
 using WebMvc.Services.OrderService;
 using WebMvc.Services.RestaurantService;
@@ -54,6 +55,7 @@ namespace WebMvc
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

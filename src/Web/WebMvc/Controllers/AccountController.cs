@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebMvc.Services.AccountService;
 
 namespace WebMvc.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index()
+        private readonly IAccountService accountService;
+
+        public AccountController(IAccountService accountService)
         {
-            return View();
+            this.accountService = accountService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var vm = await accountService.GetUsers();
+
+            return View(vm);
         }
 
         public IActionResult Create()

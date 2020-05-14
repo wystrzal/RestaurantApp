@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Identity.Dto;
 using Identity.Extensions;
 using Identity.Helpers;
 using Identity.Models;
@@ -11,9 +13,11 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Controllers
 {
@@ -24,14 +28,17 @@ namespace Identity.Controllers
         private readonly IIdentityServerInteractionService interaction;
         private readonly IClientStore clientStore;
         private readonly IEventService events;
+        private readonly IMapper mapper;
 
         public AccountController(SignInManager<User> signInManager, UserManager<User> userManager,
-            IIdentityServerInteractionService interaction, IClientStore clientStore, IEventService events)
+            IIdentityServerInteractionService interaction, IClientStore clientStore, IEventService events,
+            IMapper mapper)
         {
             this.userManager = userManager;
             this.interaction = interaction;
             this.clientStore = clientStore;
             this.events = events;
+            this.mapper = mapper;
             this.signInManager = signInManager;
         }
 
@@ -92,8 +99,8 @@ namespace Identity.Controllers
         }
 
 
-        [HttpPost]
         [Route("api/[controller]")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterDto model)
         {
             if (!ModelState.IsValid)
@@ -127,6 +134,16 @@ namespace Identity.Controllers
             return Redirect(context.PostLogoutRedirectUri);
         }
 
+        [Route("api/[controller]")]
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await userManager.Users.ToListAsync();
+
+            var usersForReturn = mapper.Map<IEnumerable<UserForReturn>>(users);
+
+            return Ok(usersForReturn);
+        }
 
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {

@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace Order.Dto
 {
-    public class OrderForAddWorkerDto
+    public class OrderForAddDto
     {
         [Required]
-        public string Table { get; set; }
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string Address { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalPrice { get; set; }
 
         public ICollection<OrderForAddItemDto> OrderItems { get; set; }
-
     }
 }
-

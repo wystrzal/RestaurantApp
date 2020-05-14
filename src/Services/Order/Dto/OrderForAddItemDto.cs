@@ -18,6 +18,6 @@ namespace Order.Dto
 
         [Required]
         public int Quantity { get; set; }
-        public OrderForAddClientDto OrderForAddDto { get; set; }
+        public OrderForAddDto OrderForAddDto { get; set; }
     }
 }

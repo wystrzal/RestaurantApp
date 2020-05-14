@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<WebMvc.Models.User>;
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,6 +8,19 @@
 
 <div class="row pt-3 text-left">
     <div class="col-12">
-
+        @foreach (var user in Model)
+        {
+            <div class="row mb-4 text-center">
+                <div class="col-4">
+                    <h6>Firsname:</h6> @user.FirstName
+                </div>
+                <div class="col-4">
+                    <h6>Lastname:</h6> @user.LastName
+                </div>
+                <div class="col-4">
+                    <h6>Username:</h6> @user.UserName
+                </div>
+            </div>
+        }
     </div>
 </div>
