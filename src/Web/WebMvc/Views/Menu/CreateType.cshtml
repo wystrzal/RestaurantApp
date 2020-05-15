@@ -35,8 +35,8 @@
         </script>
 
     </div>
-    <div class="col-12">
-        @using (Html.BeginForm("CreateTypePOST", "Menu", FormMethod.Post))
+    <div class="col-12 text-center">
+        @using (Html.BeginForm("CreateType", "Menu", FormMethod.Post))
         {
             <div class="offset-3 col-6">
                 <div class="form-group">
@@ -45,7 +45,9 @@
                 </div>
             </div>
         }
+        <partial name="_ValidationSummary" />
     </div>
+
 </div>
 
 <div>

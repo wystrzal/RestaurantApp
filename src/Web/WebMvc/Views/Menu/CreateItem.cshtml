@@ -5,7 +5,7 @@
 
 <div class="row pt-3">
     <div class="col-12 text-center">
-        @using (Html.BeginForm("CreateItemPOST", "Menu", FormMethod.Post))
+        @using (Html.BeginForm("CreateItem", "Menu", FormMethod.Post))
         {
             <div class="offset-3 col-6">
                 <div class="form-group">
@@ -33,6 +33,7 @@
                 </div>
             </div>
         }
+            <partial name="_ValidationSummary" />
     </div>
 </div>
 

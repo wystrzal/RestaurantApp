@@ -7,7 +7,7 @@ namespace Identity.Models.ViewModels
     {
         [Required]
         [StringLength(20, MinimumLength = 2)]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 6)]

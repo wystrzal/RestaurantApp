@@ -42,11 +42,21 @@ namespace WebMvc.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> CreateItemPOST(MenuItem menuItem)
+        [HttpPost]
+        public async Task<IActionResult> CreateItem(MenuItem menuItem)
         {
-            await menuService.CreateMenuItem(menuItem);
+            var vm = new CreateMenuItemViewModel
+            {
+                MenuType = await menuService.GetMenuTypes()
+            };
 
-            return RedirectToAction("CreateItem");
+            if (ModelState.IsValid)
+            {
+                await menuService.CreateMenuItem(menuItem);
+
+            }
+
+            return View(vm);
         }
 
         public async Task<IActionResult> CreateType()
@@ -59,11 +69,20 @@ namespace WebMvc.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> CreateTypePOST(MenuType menuType)
+        [HttpPost]
+        public async Task<IActionResult> CreateType(MenuType menuType)
         {
-            await menuService.CreateMenuType(menuType);
+            var vm = new CreateMenuTypeViewModel
+            {
+                SelectListTypes = await menuService.GetMenuTypes()
+            };
 
-            return RedirectToAction("CreateType");
+            if (ModelState.IsValid)
+            {
+                await menuService.CreateMenuType(menuType);
+            }
+
+            return View(vm);
         }
 
         public async Task<IActionResult> DeleteItem([FromBody]int itemId)

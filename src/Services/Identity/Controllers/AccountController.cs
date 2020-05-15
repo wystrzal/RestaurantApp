@@ -62,7 +62,7 @@ namespace Identity.Controllers
 
                 if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
+                    await events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
 
                     AuthenticationProperties props = null;
 
@@ -108,11 +108,11 @@ namespace Identity.Controllers
                 return BadRequest(ModelState);
             }
             
-            var user = new User { UserName = model.Username, FirstName = model.FirstName, LastName = model.LastName };
+            var user = new User { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName };
 
             var result = await userManager.CreateAsync(user, model.Password);
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault().Description);
 
             if (model.Role == "kitchen")
             {

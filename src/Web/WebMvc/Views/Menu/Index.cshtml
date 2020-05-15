@@ -4,15 +4,15 @@
 <h1>Menu Panel</h1>
 
 <div class="col-12 text-left">
-    @Html.ActionLink("Create Menu Item", "CreateItem", "Menu", null, new { @class = "btn btn-success" })
-    @Html.ActionLink("Create Menu Type", "CreateType", "Menu", null, new { @class = "btn btn-success pl-2" })
+    @Html.ActionLink("Create Menu Item", "CreateItem", "Menu", null, new { @class = "btn btn-success mb-2" })
+    @Html.ActionLink("Create Menu Type", "CreateType", "Menu", null, new { @class = "btn btn-success pl-2 mb-2" })
 </div>
 
 <partial name="_MenuType" model="Model" />
 
 @foreach (var item in Model.MenuItem)
 {
-<div id="item-@item.Id" class="row text-center">
+<div id="item-@item.Id" class="row text-center border mb-2">
     <div class="col-md-3 col-12 mb-3">
        <h6>Name:</h6> @item.Name
     </div>

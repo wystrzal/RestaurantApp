@@ -6,7 +6,10 @@
 <h2>Account Panel</h2>
 
 
-<div class="row pt-3 text-left">
+<div class="row pt-3">
+    <div class="col-12 text-left">
+        @Html.ActionLink("Create", "Create", "Account", null, new { @class = "btn btn-success"})
+    </div>
     <div class="col-12">
         @foreach (var user in Model)
         {

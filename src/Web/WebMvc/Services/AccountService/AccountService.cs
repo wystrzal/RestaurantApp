@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WebMvc.Infractructure;
 using WebMvc.Models;
@@ -22,6 +23,16 @@ namespace WebMvc.Services.AccountService
             this.httpContext = httpContext;
             baseUrl = "http://localhost:5000/api/account/";
         }
+
+        public async Task<HttpResponseMessage> CreateUser(User user)
+        {
+            var createUserUri = ApiPaths.Account.CreateUser(baseUrl);
+
+            var response = await httpClient.PostAsync(createUserUri, user);
+
+            return response;
+        }
+
         public async Task<IEnumerable<User>> GetUsers()
         {
             var getUsersUri = ApiPaths.Account.GetUsers(baseUrl);

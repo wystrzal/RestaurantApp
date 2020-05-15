@@ -16,9 +16,9 @@ namespace Identity.Data
             {
                 var users = new List<User>
                 {
-                    new User {UserName = "Admin", FirstName = "admin", LastName = "admin", Name = "admin"},
-                    new User {UserName = "Restaurant", FirstName = "restaurant", LastName = "restaurant", Name = "restaurant"},
-                    new User {UserName = "Kitchen", FirstName = "kitchen", LastName = "kitchen", Name = "kitchen"}
+                    new User {UserName = "Admin", FirstName = "admin", LastName = "admin"},
+                    new User {UserName = "Restaurant", FirstName = "restaurant", LastName = "restaurant"},
+                    new User {UserName = "Kitchen", FirstName = "kitchen", LastName = "kitchen"}
                 };
 
                 foreach (var user in users)

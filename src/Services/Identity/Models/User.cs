@@ -9,8 +9,6 @@ namespace Identity.Models
 {
     public class User : IdentityUser
     {
-        [Required]
-        public string Name { get; set; }
 
         [Required]
         public string FirstName { get; set; }
