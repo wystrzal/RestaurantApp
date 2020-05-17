@@ -52,16 +52,6 @@ namespace Menu
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddSwaggerGen(opt =>
-            {
-                opt.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Menu",
-                    Version = "v1",
-                    Description = "Menu Service"
-                });
-            });
-
             services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddTransient<IMenuRepository, MenuRepository>();
@@ -90,12 +80,6 @@ namespace Menu
                     }
                 });
             });
-
-            app.UseSwagger()
-             .UseSwaggerUI(c =>
-             {
-                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "MenuApi");
-             });
 
             app.UseHttpsRedirection();
 

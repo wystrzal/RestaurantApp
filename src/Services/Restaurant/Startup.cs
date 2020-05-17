@@ -45,16 +45,6 @@ namespace Kitchen
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddSwaggerGen(opt =>
-            {
-                opt.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Restaurant",
-                    Version = "v1",
-                    Description = "Restaurant Service"
-                });
-            });
-
             services.AddCustomMassTransit();
         }
 
@@ -81,12 +71,6 @@ namespace Kitchen
                     }
                 });
             });
-
-            app.UseSwagger()
-             .UseSwaggerUI(c =>
-             {
-                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "RestaurantApi");
-             });
 
             app.UseHttpsRedirection();
 

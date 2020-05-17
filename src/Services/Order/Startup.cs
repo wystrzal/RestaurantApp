@@ -59,16 +59,6 @@ namespace Order
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddSwaggerGen(opt =>
-            {
-                opt.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Order",
-                    Version = "v1",
-                    Description = "Order Service"
-                });
-            });
-
             services.AddCustomMassTransit();
 
             services.AddAutoMapper(typeof(Startup).Assembly);
@@ -98,12 +88,6 @@ namespace Order
                     }
                 });
             });
-
-            app.UseSwagger()
-             .UseSwaggerUI(c =>
-             {
-                 c.SwaggerEndpoint($"/swagger/v1/swagger.json", "OrderApi");
-             });
 
             app.UseHttpsRedirection();
 

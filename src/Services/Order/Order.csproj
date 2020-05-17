@@ -22,9 +22,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="RawRabbit" Version="1.10.4" />
     <PackageReference Include="RawRabbit.vNext" Version="1.10.4" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.4.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.4.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.4.1" />
   </ItemGroup>
 
   <ItemGroup>
