@@ -2,25 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using GreenPipes;
-using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Account.Data;
+using Account.Extensions;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RabbitMQ.Client;
-using Restaurant.Extensions;
 
-namespace Kitchen
+namespace Account
 {
     public class Startup
     {
@@ -34,17 +32,17 @@ namespace Kitchen
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
 
-            services.AddCustomAuth();
+            services.AddCustomIdentity();
 
-            services.AddMvc(options =>
-            {
-                options.EnableEndpointRouting = false;
-            })
-                .SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()));
 
-            services.AddCustomMassTransit();
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,13 +69,13 @@ namespace Kitchen
                 });
             });
 
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors("AllowAll");
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

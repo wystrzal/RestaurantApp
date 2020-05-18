@@ -9,9 +9,14 @@ namespace WebMvc.Infractructure
     {
         public static class Account
         {
+            public static string Login(string baseUri)
+            {
+                return $"{baseUri}login";
+            }
+
             public static string CreateUser(string baseUri)
             {
-                return $"{baseUri}";
+                return $"{baseUri}register";
             }
 
             public static string GetUsers(string baseUri)

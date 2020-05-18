@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,33 +15,8 @@ namespace WebMvc.Extensions
     {
         public static void AddCustomAuth(this IServiceCollection services)
         {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
-            })
-            .AddCookie("Cookies")
-            .AddOpenIdConnect("oidc", options =>
-            {
-                options.Authority = "http://localhost:5000";
-                options.RequireHttpsMetadata = false;
-
-                options.ClientId = "mvc";
-                options.ClientSecret = "secret";
-                options.ResponseType = "code";
-                options.SaveTokens = true;
-                options.GetClaimsFromUserInfoEndpoint = true;
-
-                options.Scope.Clear();
-                options.Scope.Add("openid");
-
-                options.Scope.Add("order");
-                options.Scope.Add("menu");
-                options.Scope.Add("restaurant");
-                options.ClaimActions.Add(new MapAllClaimsAction());
-                options.ClaimActions.DeleteClaim(JwtClaimTypes.Role);
-                options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie();
 
             services.AddAuthorization(options =>
             {

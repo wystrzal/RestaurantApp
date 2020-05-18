@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WebMvc.Infractructure;
 using WebMvc.Models;
+using WebMvc.Models.AccountModels;
+using WebMvc.ViewModels;
 
 namespace WebMvc.Services.AccountService
 {
@@ -15,12 +17,10 @@ namespace WebMvc.Services.AccountService
     {
         private readonly string baseUrl;
         private readonly IHttpClient httpClient;
-        private readonly IHttpContextAccessor httpContext;
 
         public AccountService(IHttpClient httpClient, IHttpContextAccessor httpContext)
         {
             this.httpClient = httpClient;
-            this.httpContext = httpContext;
             baseUrl = "http://localhost:5000/api/account/";
         }
 
@@ -42,6 +42,15 @@ namespace WebMvc.Services.AccountService
             var respone = JsonConvert.DeserializeObject<IEnumerable<User>>(dataString);
 
             return respone;
+        }
+
+        public async Task<HttpResponseMessage> Login(LoginViewModel login)
+        {
+            var loginUri = ApiPaths.Account.Login(baseUrl);
+
+            var response = await httpClient.PostAsync(loginUri, login);
+
+            return response;
         }
     }
 }

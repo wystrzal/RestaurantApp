@@ -41,8 +41,6 @@ namespace WebMvc
         {
             services.AddControllersWithViews();
 
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
             services.AddCustomAuth();
 
             services.AddSignalR();
@@ -79,8 +77,9 @@ namespace WebMvc
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute()
-                    .RequireAuthorization();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
 
                 endpoints.MapHub<SignalServerHub>("/SignalServerHub");
             });
