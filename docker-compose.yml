@@ -1,0 +1,104 @@
+version: '3.4'
+
+networks:
+  frontend:
+  backend:
+
+services:
+  account:
+    image: ${DOCKER_REGISTRY-}account
+    build:
+      context: .
+      dockerfile: src/Services/Account/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:80"
+    networks:
+      - backend
+      - frontend 
+    depends_on:
+      - mssqlserver
+      
+      
+
+  menu:
+    image: ${DOCKER_REGISTRY-}menu
+    build:
+      context: .
+      dockerfile: src/Services/Menu/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "5200:80"
+    networks:
+      - backend
+      - frontend 
+    depends_on:
+      - account
+      - mssqlserver
+
+
+  order:
+    image: ${DOCKER_REGISTRY-}order
+    build:
+      context: .
+      dockerfile: src/Services/Order/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "5300:80"
+    networks:
+      - backend
+      - frontend 
+    depends_on:
+      - account
+      - mssqlserver
+
+
+  restaurant:
+    image: ${DOCKER_REGISTRY-}restaurant
+    build:
+      context: .
+      dockerfile: src/Services/Restaurant/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "5400:80"
+    networks:
+      - backend
+      - frontend 
+    depends_on:
+      - account
+
+
+
+  webmvc:
+    image: ${DOCKER_REGISTRY-}webmvc
+    build:
+      context: .
+      dockerfile: src/Web/WebMvc/Dockerfile
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "5050:80"
+    networks:
+      - frontend 
+    depends_on:
+      - account
+      - menu
+      - order
+      - restaurant
+
+
+
+  mssqlserver:
+    image: "microsoft/mssql-server-linux:2017-latest"
+    container_name: mssqlserver
+    ports:
+      - "1410:1433" 
+    networks:
+      - backend
+    environment:
+      - SA_PASSWORD=P@ssword
+      - ACCEPT_EULA="Y"

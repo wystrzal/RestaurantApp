@@ -21,7 +21,7 @@ namespace WebMvc.Services.AccountService
         public AccountService(IHttpClient httpClient, IHttpContextAccessor httpContext)
         {
             this.httpClient = httpClient;
-            baseUrl = "http://localhost:5000/api/account/";
+            baseUrl = "http://host.docker.internal:5000/api/account/";
         }
 
         public async Task<HttpResponseMessage> CreateUser(User user)

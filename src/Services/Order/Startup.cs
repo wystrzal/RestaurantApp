@@ -49,7 +49,7 @@ namespace Order
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
             });
 
-            services.AddCustomAuth();
+            services.AddCustomAuth(Configuration);
 
 
             services.AddMvc(options =>
@@ -87,8 +87,6 @@ namespace Order
                     }
                 });
             });
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

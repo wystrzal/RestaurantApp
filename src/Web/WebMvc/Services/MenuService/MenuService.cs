@@ -25,14 +25,15 @@ namespace WebMvc.Services.MenuService
         {
             this.httpClient = httpClient;
             this.httpContext = httpContext;
-            baseUrl = "http://localhost:5200/api/menu/";
+            baseUrl = "http://host.docker.internal:5200/api/menu/";
         }
 
         public async Task DeleteMenuType(int typeId)
         {
             var deleteTypeUri = ApiPaths.Menu.DeleteMenuType(baseUrl, typeId);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.DeleteAsync(deleteTypeUri, accessToken);
         }
@@ -41,7 +42,8 @@ namespace WebMvc.Services.MenuService
         {
             var deleteItemUri = ApiPaths.Menu.DeleteMenuItem(baseUrl, itemId);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.DeleteAsync(deleteItemUri, accessToken);
         }
@@ -50,7 +52,8 @@ namespace WebMvc.Services.MenuService
         {
             var postMenuItemUri = ApiPaths.Menu.PostMenuItem(baseUrl);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.PostAsync(postMenuItemUri, menuItem, accessToken);
         }
@@ -59,7 +62,8 @@ namespace WebMvc.Services.MenuService
         {
             var postMenuTypeUri = ApiPaths.Menu.PostMenuType(baseUrl);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.PostAsync(postMenuTypeUri, menuType, accessToken);
         }

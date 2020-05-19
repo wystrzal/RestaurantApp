@@ -53,7 +53,7 @@ namespace WebMvc.Controllers
             if (ModelState.IsValid)
             {
                 await menuService.CreateMenuItem(menuItem);
-
+                return RedirectToAction("Index");
             }
 
             return View(vm);
@@ -80,6 +80,7 @@ namespace WebMvc.Controllers
             if (ModelState.IsValid)
             {
                 await menuService.CreateMenuType(menuType);
+                return RedirectToAction("Index");
             }
 
             return View(vm);

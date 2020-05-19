@@ -43,7 +43,7 @@ namespace Menu
                 options.UseSqlServer(Configuration["ConnectionStrings"]);
             });
 
-            services.AddCustomAuth();
+            services.AddCustomAuth(Configuration);
 
             services.AddMvc(options =>
             {
@@ -79,8 +79,6 @@ namespace Menu
                     }
                 });
             });
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

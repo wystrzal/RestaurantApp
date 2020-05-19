@@ -18,13 +18,14 @@ namespace WebMvc.Services.RestaurantService
         {
             this.httpClient = httpClient;
             this.httpContext = httpContext;
-            this.baseUri = "http://localhost:5400/api/restaurant/";
+            this.baseUri = "http://host.docker.internal:5400/api/restaurant/";
         }
         public async Task OrderReady(int orderId)
         {
             var orderReadyUri = ApiPaths.Restaurant.OrderReady(baseUri, orderId);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.PostAsync(orderReadyUri, orderId, accessToken);
         }
@@ -33,7 +34,8 @@ namespace WebMvc.Services.RestaurantService
         {
             var orderDeliveredUri = ApiPaths.Restaurant.OrderDelivered(baseUri, orderId);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             await httpClient.PostAsync(orderDeliveredUri, orderId, accessToken);
         }

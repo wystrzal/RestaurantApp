@@ -36,7 +36,7 @@ namespace Kitchen
         {
             services.AddControllers();
 
-            services.AddCustomAuth();
+            services.AddCustomAuth(Configuration);
 
             services.AddMvc(options =>
             {
@@ -70,8 +70,6 @@ namespace Kitchen
                     }
                 });
             });
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

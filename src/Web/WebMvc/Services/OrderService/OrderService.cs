@@ -20,14 +20,15 @@ namespace WebMvc.Services.OrderService
         {
             this.httpClient = httpClient;
             this.httpContext = httpContext;
-            baseUrl = "http://localhost:5300/api/order/";
+            baseUrl = "http://host.docker.internal:5300/api/order/";
         }
 
         public async Task<IEnumerable<Orders>> GetOrders()
         {
             var getOrdersUri = ApiPaths.Order.GetOrders(baseUrl);
 
-            var accessToken = await httpContext.HttpContext.GetTokenAsync("access_token");
+            var accessToken = httpContext.HttpContext.User.Claims.Where(x => x.Type == "AcessToken")
+                .Select(x => x.Value).FirstOrDefault();
 
             var dataString = await httpClient.GetStringAsync(getOrdersUri, accessToken);
 
