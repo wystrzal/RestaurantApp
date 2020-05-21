@@ -109,26 +109,24 @@ namespace WebMvc.Controllers
                 if (string.IsNullOrEmpty(user.UserName))
                 {
                     ModelState.AddModelError("", "The Password field is required.");
-                    return View();
                 }
 
                 if (!user.Password.ContainsUpper())
                 {
                     ModelState.AddModelError("", "The Password field must have uppercase letters.");
-                    return View();
                 }
 
                 if (!user.Password.ContainsDigit())
                 {
                     ModelState.AddModelError("", "The Password field must have digits.");
-                    return View();
                 }
 
                 var response = await accountService.CreateUser(user);
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    ModelState.AddModelError("", await response.Content.ReadAsStringAsync());
+                    return RedirectToAction("Index");
                 }
+                    ModelState.AddModelError("", await response.Content.ReadAsStringAsync());
             }
 
             return View();

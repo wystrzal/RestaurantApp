@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Account.Controllers
@@ -30,6 +31,14 @@ namespace Account.Controllers
             this.signInManager = signInManager;
             this.config = config;
             this.mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await userManager.Users.ToListAsync();
+
+            return Ok(users);
         }
 
         [HttpPost("login")]
