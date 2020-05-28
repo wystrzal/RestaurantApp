@@ -1,6 +1,6 @@
 # RestaurantApp
 
-My 3# project.
+My #3 project.
 
 ## Table of contents
 
