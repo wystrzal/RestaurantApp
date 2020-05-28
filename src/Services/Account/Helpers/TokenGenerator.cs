@@ -30,7 +30,7 @@ namespace Account.Helpers
             var roleClaims = new List<string>();
 
             //Add role claims for user.
-            if (roles.Count() > 0)
+            if (roles.Count() > 0 && roles != null)
             {
                 foreach (var role in roles)
                 {

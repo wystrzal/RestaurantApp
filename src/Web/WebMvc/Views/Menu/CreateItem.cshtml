@@ -4,40 +4,51 @@
 <h2>Create Menu Item</h2>
 
 <div class="row pt-3">
-    <div class="col-12 text-center">
-        @using (Html.BeginForm("CreateItem", "Menu", FormMethod.Post))
-        {
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    @Html.TextBoxFor(m => m.MenuItem.Name, new { placeholder = "Name", @class = "form-control" })
+    @if (Model.MenuType.Count() > 0)
+    {
+        <div class="col-12 text-center">
+            @using (Html.BeginForm("CreateItem", "Menu", FormMethod.Post))
+            {
+                <div class="offset-3 col-6">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.MenuItem.Name, new { placeholder = "Name", @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    @Html.TextBoxFor(m => m.MenuItem.Price, new { placeholder = "Price", @class = "form-control" })
+                <div class="offset-3 col-6">
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.MenuItem.Price, new { placeholder = "Price", @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    @Html.TextAreaFor(m => m.MenuItem.Description, new { placeholder = "Description", @class = "form-control" })
+                <div class="offset-3 col-6">
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.MenuItem.Description, new { placeholder = "Description", @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    @Html.DropDownListFor(m => m.MenuItem.MenuTypeId, Model.MenuType, new { @class = "form-control" })
+                <div class="offset-3 col-6">
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.MenuItem.MenuTypeId, Model.MenuType, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="offset-3 col-6">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Create</button>
+                <div class="offset-3 col-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Create</button>
+                    </div>
                 </div>
-            </div>
-        }
+            }
             <partial name="_ValidationSummary" />
-    </div>
+        </div>
+    }
+    else
+    {
+        <div class="offset-3 col-6 text-center">
+            <h2>First Add Menu Types</h2>
+        </div>
+    }
+
 </div>
 
+
 <div>
-    <a asp-action="Index" class="btn btn-info">Back to List</a>
+  <a asp-action="Index" class="btn btn-info">Back to List</a>
 </div>
 
