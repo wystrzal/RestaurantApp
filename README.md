@@ -45,6 +45,8 @@ MVC - Employee side.
 - Docker.
 
 ## Setup
+Requirements:
+* Docker
 
 To run App open Restaurant.sln with Visual Studio, right click on docker-compose Set as Startup Project and press F5.
 
