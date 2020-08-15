@@ -1,7 +1,5 @@
 # RestaurantApp
 
-My #3 project.
-
 ## Table of contents
 
 - [General info](#general-info)
